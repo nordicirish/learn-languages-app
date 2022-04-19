@@ -1,0 +1,7 @@
+ENV file lets other developers know the connnection settings are stored in .env
+and to populate it with their own connection details
+
+db_server = 
+user = 
+password = 
+db = 
