@@ -1,9 +1,9 @@
 // .env
 require("dotenv").config();
 const mysql = require("mysql");
-// const locationSchema = require("../location-schema.js");
+let translationSchema = require("../translation-schema.js");
 // const rangeSchema = require("../range-schema.js");
-// const validate = require("../my-validator.js");
+const validate = require("../my-validator.js");
 const dbconfig = require("./dbconfig");
 const connection = mysql.createConnection(dbconfig);
 let pool = mysql.createPool(dbconfig);
@@ -31,23 +31,27 @@ let connectionFunctions = {
     });
   },
 
-  // save: (translation) => {
-  //   return new Promise((resolve, reject) => {
-  //     let validation = validate(translation, translationSchema);
-  //     if (validation.errors.length > 0) {
-  //       reject(validation.errors);
-  //       console.log(validation.errors);
-  //     } else {
-  //       let sql = `INSERT INTO translations SET ?`;
-  //       connection.query(sql, translation, (err, result) => {
-  //         if (err) {
-  //           reject(err);
-  //         }
-  //         resolve(result.affectedRows > 0);
-  //       });
-  //     }
-  //   });
-  // },
+  save: (translation) => {
+    translation = { english: "squirrel", finnish: "orava", tag_id: 3 };
+    return new Promise((resolve, reject) => {
+      // console.log(translation);
+      let validation = validate(translation, translationSchema);
+      // console.log(translationSchema);
+      if (validation.errors.length > 0) {
+        reject(validation.errors);
+        console.log(validation.errors);
+      } else {
+        let sql = `INSERT INTO translations SET ?`;
+        pool.query(sql, translation, (err, result) => {
+          console.log(sql);
+          if (err) {
+            reject(err);
+          }
+          resolve(result.affectedRows > 0);
+        });
+      }
+    });
+  },
 
   findAll: () => {
     return new Promise((resolve, reject) => {

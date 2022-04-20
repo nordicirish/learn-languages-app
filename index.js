@@ -18,6 +18,17 @@ app.get("/translations", async (req, res) => {
   }
 });
 
+app.post("/translations/add", async (req, res) => {
+  translation = req.body;
+  try {
+    await database.save(translation);
+    res.status(201);
+    res.send(translation).end();
+  } catch (err) {
+    res.status(500).end();
+  }
+});
+
 const server = app.listen(port, () => {
   console.log(`Listening on port ${server.address().port}`);
 });
