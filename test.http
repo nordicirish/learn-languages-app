@@ -3,4 +3,6 @@
 # POST  http://localhost:8080/translations/add
 
 http://localhost:8080/translations/sort-by-tag
+
+http://localhost:8080/translations/sort-by-tag-desc
     

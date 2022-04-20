@@ -69,7 +69,7 @@ let connectionFunctions = {
 
   sortByTag: () => {
     return new Promise((resolve, reject) => {
-      connection.query(
+      pool.query(
         `SELECT * FROM translations ORDER BY tag_id `,
         (err, translations) => {
           if (err) {
@@ -83,7 +83,7 @@ let connectionFunctions = {
 
   sortByTagDesc: () => {
     return new Promise((resolve, reject) => {
-      connection.query(
+      pool.query(
         `SELECT * FROM translations ORDER BY tag_id DESC`,
         (err, translations) => {
           if (err) {
@@ -108,16 +108,14 @@ let connectionFunctions = {
   //   });
   // },
 
-  // deleteById: (id) => {
-  //   let sql = `DELETE from locations WHERE id = ? `;
-  //   return new Promise((resolve, reject) => {
-  //     connection.query(sql, [id], (err, result) => {
-  //       //* @author Tanja Rannikko
-  //       // @author Jussi Pohjolainen
-  //       err ? reject(err) : resolve(result.affectedRows > 0);
-  //     });
-  //   });
-  // },
+  deleteById: (id) => {
+    let sql = `DELETE from translations WHERE id = ? `;
+    return new Promise((resolve, reject) => {
+      pool.query(sql, [id], (err, result) => {
+        err ? reject(err) : resolve(result.affectedRows > 0);
+      });
+    });
+  },
 
   // filterByLat: (latitudeRange) => {
   //   return new Promise((resolve, reject) => {

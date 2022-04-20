@@ -45,6 +45,20 @@ app.post("/translations/add", async (req, res) => {
   }
 });
 
+app.get("/translations/delete/:id([0-9]+)", async (req, res) => {
+  id = req.params.id;
+  console.log(id);
+  try {
+    let result = await database.deleteById(id);
+    result === false
+      ? res.status(404).send("Item not found").end()
+      : res.status(200);
+    res.send("Item deleted").end();
+  } catch (err) {
+    res.status(500).end();
+  }
+});
+
 const server = app.listen(port, () => {
   console.log(`Listening on port ${server.address().port}`);
 });
