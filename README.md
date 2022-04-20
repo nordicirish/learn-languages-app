@@ -65,8 +65,11 @@ npm init
 Rename env file to .env and fill your database credentials:
 
 db_server =
+
 user =
+
 password =
+
 db =
 
 <!-- cd .. nodemon index.js -->

@@ -17,6 +17,14 @@ app.get("/translations", async (req, res) => {
     res.status(500).end();
   }
 });
+app.get("/translations/sort-by-tag", async (req, res) => {
+  try {
+    let result = await database.sortByTag();
+    res.status(200).send(result).end();
+  } catch (err) {
+    res.status(500).end();
+  }
+});
 
 app.post("/translations/add", async (req, res) => {
   translation = req.body;

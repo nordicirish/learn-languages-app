@@ -1,4 +1,6 @@
 # http://localhost:8080/
 
-POST  http://localhost:8080/translations/add
+# POST  http://localhost:8080/translations/add
+
+http://localhost:8080/translations/sort-by-tag
     
