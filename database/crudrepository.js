@@ -81,6 +81,20 @@ let connectionFunctions = {
     });
   },
 
+  sortByTagDesc: () => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT * FROM translations ORDER BY tag_id DESC`,
+        (err, translations) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(translations);
+        }
+      );
+    });
+  },
+
   // findById: (id) => {
   //   let sql = `SELECT * FROM locations WHERE id = ? `;
   //   return new Promise((resolve, reject) => {
