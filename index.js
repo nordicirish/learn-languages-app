@@ -5,6 +5,8 @@ const port = process.env.PORT || 8080;
 require("dotenv").config();
 // const mysql = require("mysql");
 app.use(express.static("frontend/build"));
+// post won't work withu'out express.json
+app.use(express.json());
 const database = require("./database/crudrepository.js");
 // app.use(express.static("public"));
 app.use(cors());
@@ -35,11 +37,12 @@ app.get("/translations/sort-by-tag-desc", async (req, res) => {
 });
 
 app.post("/translations/add", async (req, res) => {
-  translation = req.body;
+  newTranslation = req.body;
+  console.log(newTranslation);
   try {
-    await database.save(translation);
+    await database.save(newTranslation);
     res.status(201);
-    res.send(translation).end();
+    res.send(newTranslation).end();
   } catch (err) {
     res.status(500).end();
   }

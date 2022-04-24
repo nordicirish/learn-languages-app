@@ -4,8 +4,11 @@ import axios from "axios";
 import Translation from "./component/Translation";
 
 const App = () => {
-  // useState function to initialize the piece of state stored in birds with the array of birds passed in the props:
+  // useState function to initialize the piece of state stored in translations with the array of translataion values passed in the props:
   const [translations, setTranslations] = useState([]);
+  const [newEnglish, setNewEnglish] = useState("english...");
+  const [newFinnish, setNewFinnish] = useState("finnish...");
+  const [newCategory, setNewCategory] = useState(1);
 
   //useEffect hooks fetches data using axios
   useEffect(() => {
@@ -18,12 +21,74 @@ const App = () => {
   console.log("render", translations.length, "translations");
 
   // event handlers
+  const addTranslation = (event) => {
+    event.preventDefault();
+    //stops page reload and other unwanted default behaviour
+    const translationObject = {
+      english: newEnglish,
+      finnish: newFinnish,
+      tag_id: newCategory,
+    };
+    const test = {
+      english: "dd",
+      finnish: "AA",
+      tag_id: 5,
+    };
+
+    axios
+      .post("http://localhost:8080/translations/add", test, {
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+      // .post("http://localhost:8080/translations/add", translationObject)
+      .then((response) => {
+        console.log(response);
+        setTranslations(translations.concat(response.data));
+        setNewEnglish("");
+        setNewFinnish("");
+        setNewCategory(1);
+      });
+  };
+
+  const handleEnglishChange = (event) => {
+    console.log(event.target.value);
+    setNewEnglish(event.target.value);
+  };
+
+  const handleFinnishChange = (event) => {
+    console.log(event.target.value);
+    setNewFinnish(event.target.value);
+  };
+
+  const handleCategoryChange = (event) => {
+    console.log(event.target.value);
+    setNewCategory(event.target.value);
+  };
 
   return (
     <div className="container">
       <div className="box">
         <h1>Learn Languages App</h1>
+        <form className="input-form" onSubmit={addTranslation}>
+          <label>
+            Enter the English word:{" "}
+            <input value={newEnglish} onChange={handleEnglishChange} />
+          </label>
 
+          <label>
+            Enter the Finnish word:{" "}
+            <input value={newFinnish} onChange={handleFinnishChange} />
+          </label>
+          <label>
+            Enter the tag:{" "}
+            <input value={newCategory} onChange={handleCategoryChange} />
+          </label>
+
+          <button className="input-button" stype="submit">
+            Save
+          </button>
+        </form>
         <h2>Translations</h2>
         <ul>
           {translations.map((translation) => (

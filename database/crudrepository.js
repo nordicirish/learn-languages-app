@@ -32,7 +32,7 @@ let connectionFunctions = {
   },
 
   save: (translation) => {
-    translation = { english: "squirrel", finnish: "orava", tag_id: 3 };
+    // translation = { english: "squirrel", finnish: "orava", tag_id: 3 };
     return new Promise((resolve, reject) => {
       // console.log(translation);
       let validation = validate(translation, translationSchema);
