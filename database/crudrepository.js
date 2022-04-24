@@ -56,7 +56,7 @@ let connectionFunctions = {
   findAll: () => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `SELECT * FROM translations, tags WHERE tag_id = tags.id`,
+        `SELECT * FROM translations, tags WHERE tags.id = tag_id`,
         (err, translations) => {
           if (err) {
             reject(err);
