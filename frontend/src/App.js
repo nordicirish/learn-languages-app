@@ -25,7 +25,6 @@ const App = () => {
 
   const addTranslation = (event) => {
     event.preventDefault();
-
     //stops page reload and other unwanted default behaviour
     const translationObject = {
       english: newEnglish,
@@ -38,7 +37,6 @@ const App = () => {
           "content-type": "application/json",
         },
       })
-      // .post("http://localhost:8080/translations/add", translationObject)
       .then((response) => {
         console.log(response);
         setTranslations(translations.concat(response.data));
@@ -89,7 +87,7 @@ const App = () => {
               name="finnish"
               required="required"
               placeholder="Finnish translation"
-              pattern="[a-zA-Z]*"
+              pattern="[a-zA-ZäöåÄÖÅ]*"
               title="The word should have only letters"
               value={newFinnish}
               onChange={handleFinnishChange}
@@ -102,7 +100,7 @@ const App = () => {
               name="tag"
               required="required"
               placeholder="Tag"
-              pattern="[a-zA-Z]*"
+              pattern="[a-zA-ZäöåÄÖÅ]*"
               title="The word should have only letters"
               value={newTag}
               onChange={handleTagChange}
