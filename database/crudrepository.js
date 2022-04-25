@@ -32,7 +32,7 @@ let connectionFunctions = {
   },
 
   save: (translation) => {
-    // translation = { english: "squirrel", finnish: "orava", tag_id: 3 };
+    // translation = { english: "squirrel", finnish: "orava", tag: 3 };
     return new Promise((resolve, reject) => {
       // console.log(translation);
       let validation = validate(translation, translationSchema);
@@ -55,15 +55,12 @@ let connectionFunctions = {
 
   findAll: () => {
     return new Promise((resolve, reject) => {
-      pool.query(
-        `SELECT translations.id, translations.english, translations.finnish, tags.category FROM translations LEFT JOIN tags ON translations.tag_id = tags.id`,
-        (err, translations) => {
-          if (err) {
-            reject(err);
-          }
-          resolve(translations);
+      pool.query(`SELECT * from translations`, (err, translations) => {
+        if (err) {
+          reject(err);
         }
-      );
+        resolve(translations);
+      });
     });
   },
 
