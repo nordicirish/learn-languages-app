@@ -75,6 +75,8 @@ const App = () => {
               name="english"
               required="required"
               placeholder="Enter the English word"
+              pattern="[a-zA-Z]*"
+              title="The word should have only letters"
               value={newEnglish}
               onChange={handleEnglishChange}
             />
@@ -87,6 +89,8 @@ const App = () => {
               name="finnish"
               required="required"
               placeholder="Finnish translation"
+              pattern="[a-zA-Z]*"
+              title="The word should have only letters"
               value={newFinnish}
               onChange={handleFinnishChange}
             />
@@ -98,6 +102,8 @@ const App = () => {
               name="tag"
               required="required"
               placeholder="Tag"
+              pattern="[a-zA-Z]*"
+              title="The word should have only letters"
               value={newTag}
               onChange={handleTagChange}
             />
