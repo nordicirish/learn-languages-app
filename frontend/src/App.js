@@ -6,37 +6,34 @@ import Translation from "./component/Translation";
 const App = () => {
   // useState function to initialize the piece of state stored in translations with the array of translataion values passed in the props:
   const [translations, setTranslations] = useState([]);
-  const [newEnglish, setNewEnglish] = useState("english...");
-  const [newFinnish, setNewFinnish] = useState("finnish...");
-  const [newTag, setNewTag] = useState("tag...");
+  const [newEnglish, setNewEnglish] = useState("");
+  const [newFinnish, setNewFinnish] = useState("");
+  const [newTag, setNewTag] = useState("");
 
   //useEffect hooks fetches data using axios
   useEffect(() => {
     console.log("effect");
     axios.get("http://localhost:8080/translations").then((response) => {
       console.log("promise fulfilled");
+      //initialise the data in the translations array
       setTranslations(response.data);
     });
   }, []);
   console.log("render", translations.length, "translations");
 
   // event handlers
+
   const addTranslation = (event) => {
     event.preventDefault();
+
     //stops page reload and other unwanted default behaviour
     const translationObject = {
       english: newEnglish,
       finnish: newFinnish,
       tag_id: newTag,
     };
-    const test = {
-      english: "dd",
-      finnish: "AA",
-      tag_id: "Plants",
-    };
-
     axios
-      .post("http://localhost:8080/translations/add", test, {
+      .post("http://localhost:8080/translations/add", translationObject, {
         headers: {
           "content-type": "application/json",
         },
@@ -72,16 +69,38 @@ const App = () => {
         <h1>Learn Languages App</h1>
         <form className="input-form" onSubmit={addTranslation}>
           <label>
-            Enter the English word:{" "}
-            <input value={newEnglish} onChange={handleEnglishChange} />
+            English word:{" "}
+            <input
+              type="text"
+              name="english"
+              required="required"
+              placeholder="Enter the English word"
+              value={newEnglish}
+              onChange={handleEnglishChange}
+            />
           </label>
 
           <label>
-            Enter the Finnish word:{" "}
-            <input value={newFinnish} onChange={handleFinnishChange} />
+            Finnish word:{" "}
+            <input
+              type="text"
+              name="finnish"
+              required="required"
+              placeholder="Finnish translation"
+              value={newFinnish}
+              onChange={handleFinnishChange}
+            />
           </label>
           <label>
-            Enter the tag: <input value={newTag} onChange={handleTagChange} />
+            Tag:{" "}
+            <input
+              type="text"
+              name="tag"
+              required="required"
+              placeholder="Tag"
+              value={newTag}
+              onChange={handleTagChange}
+            />
           </label>
 
           <button className="input-button" stype="submit">
