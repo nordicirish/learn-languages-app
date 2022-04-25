@@ -43,7 +43,6 @@ let connectionFunctions = {
       } else {
         let sql = `INSERT INTO translations SET ?`;
         pool.query(sql, translation, (err, result) => {
-          console.log(sql);
           if (err) {
             reject(err);
           }

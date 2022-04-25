@@ -27,9 +27,11 @@ label {
   background-color: lightsalmon;
   padding: 0 1.6rem 1.6rem 1.6rem;
   border-radius: 0.6rem;
+  align-items: center;
 }
 
 .input-form {
+  width:80%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,4 +45,14 @@ label {
 
 .App-link {
   color: #61dafb;
+}
+
+header,
+.row {
+  display: flex;
+}
+
+.col {
+  flex: 1;
+  
 }
