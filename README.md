@@ -31,7 +31,7 @@ tag VARCHAR(255) UNIQUE NOT NULL PRIMARY KEY
 );
 
 INSERT INTO
-tags (category)
+tags (tag)
 VALUES
 ("Colors"),
 ("Vehicles"),
@@ -42,12 +42,12 @@ VALUES
 INSERT INTO
 translations (english, finnish, tag_id)
 VALUES
-("red", "punainen", 1),
-("car", "auto", 2),
-("dog", "koira", 3),
-("cat", "kissa", 3),
-("table", "pöytä", 4),
-("birch", "koivu", 5)
+("red", "punainen", "Colors"),
+("car", "auto", "Vehicles"),
+("dog", "koira", "Animals"),
+("cat", "kissa", "Animals"),
+("table", "pöytä", "Furniture"),
+("birch", "koivu", "Plants")
 ;
 
 ### Application
