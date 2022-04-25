@@ -5,7 +5,7 @@ const Translation = ({ translation }) => {
     <li>
       <b>English: </b> {translation.english} <b>Finnish: </b>
       {translation.finnish} <b>Tag: </b>
-      {translation.category}
+      {translation.tag_id}
     </li>
   );
 };
