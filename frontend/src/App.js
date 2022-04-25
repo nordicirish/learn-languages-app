@@ -8,7 +8,7 @@ const App = () => {
   const [translations, setTranslations] = useState([]);
   const [newEnglish, setNewEnglish] = useState("english...");
   const [newFinnish, setNewFinnish] = useState("finnish...");
-  const [newCategory, setNewCategory] = useState(1);
+  const [newTag, setNewTag] = useState("tag...");
 
   //useEffect hooks fetches data using axios
   useEffect(() => {
@@ -27,12 +27,12 @@ const App = () => {
     const translationObject = {
       english: newEnglish,
       finnish: newFinnish,
-      tag_id: newCategory,
+      tag_id: newTag,
     };
     const test = {
       english: "dd",
       finnish: "AA",
-      tag_id: 5,
+      tag_id: "Plants",
     };
 
     axios
@@ -47,7 +47,7 @@ const App = () => {
         setTranslations(translations.concat(response.data));
         setNewEnglish("");
         setNewFinnish("");
-        setNewCategory(1);
+        setNewTag("");
       });
   };
 
@@ -61,9 +61,9 @@ const App = () => {
     setNewFinnish(event.target.value);
   };
 
-  const handleCategoryChange = (event) => {
+  const handleTagChange = (event) => {
     console.log(event.target.value);
-    setNewCategory(event.target.value);
+    setNewTag(event.target.value);
   };
 
   return (
@@ -81,8 +81,7 @@ const App = () => {
             <input value={newFinnish} onChange={handleFinnishChange} />
           </label>
           <label>
-            Enter the tag:{" "}
-            <input value={newCategory} onChange={handleCategoryChange} />
+            Enter the tag: <input value={newTag} onChange={handleTagChange} />
           </label>
 
           <button className="input-button" stype="submit">
