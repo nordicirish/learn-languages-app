@@ -31,15 +31,15 @@ label {
 }
 
 .input-form {
-  width:80%;
+  width:100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .input-button {
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
+  height: 3rem;
   border-radius: 0.8rem;
 }
 
@@ -47,12 +47,12 @@ label {
   color: #61dafb;
 }
 
-header,
-.row {
-  display: flex;
-}
+/* admin-table styles */
 
-.col {
-  flex: 1;
-  
+.admin-table {
+  min-width:80%;
+}
+.admin-table th {
+  text-align:left;
+  font-size: 120%;
 }
