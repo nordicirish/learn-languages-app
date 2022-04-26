@@ -112,11 +112,29 @@ const App = () => {
           </button>
         </form>
         <h2>Translations</h2>
-        <ul>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>English</th>
+              <th>Finnish</th>
+              <th>Tag</th>
+            </tr>
+          </thead>
+          <tbody>
+            {translations.map((translation) => (
+              <tr>
+                <td>{translation.english}</td>
+                <td>{translation.finnish}</td>
+                <td>{translation.tag_id}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* <ul>
           {translations.map((translation) => (
             <Translation key={translation.id} translation={translation} />
           ))}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );
