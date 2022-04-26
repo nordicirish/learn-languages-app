@@ -1,7 +1,8 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import AdminTable from "./component/Admintable";
+import AdminTable from "./component/AdminTable";
+import AdminForm from "./component/AdminForm";
 
 const App = () => {
   // useState function to initialize the piece of state stored in translations with the array of translataion values passed in the props:
@@ -65,6 +66,7 @@ const App = () => {
     <div className="container">
       <div className="box">
         <h1>Learn Languages App</h1>
+        {/* <AdminForm /> */}
         <form className="input-form" onSubmit={addTranslation}>
           <label>
             English word:{" "}
@@ -112,7 +114,7 @@ const App = () => {
           </button>
         </form>
         <h2>Translations</h2>
-        <AdminTable />
+        <AdminTable translations={translations} />
       </div>
     </div>
   );

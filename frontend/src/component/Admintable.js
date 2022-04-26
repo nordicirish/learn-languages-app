@@ -1,6 +1,7 @@
 import React from "react";
-
-const AdminTable = (props) => {
+// pass translations as a named prop to ensure it is passed as an array
+// set an attribute translations = {translations} in component tag in app.js
+const AdminTable = ({ translations }) => {
   return (
     <table className="admin-table">
       <thead>
@@ -11,7 +12,7 @@ const AdminTable = (props) => {
         </tr>
       </thead>
       <tbody>
-        {props.translations.map((translation) => (
+        {translations.map((translation) => (
           <tr key={translation.id}>
             <td>{translation.english}</td>
             <td>{translation.finnish}</td>
