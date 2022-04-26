@@ -112,7 +112,7 @@ const App = () => {
           </button>
         </form>
         <h2>Translations</h2>
-        <table class="admin-table">
+        <table className="admin-table">
           <thead>
             <tr>
               <th>English</th>
@@ -122,7 +122,7 @@ const App = () => {
           </thead>
           <tbody>
             {translations.map((translation) => (
-              <tr>
+              <tr key={translation.id}>
                 <td>{translation.english}</td>
                 <td>{translation.finnish}</td>
                 <td>{translation.tag_id}</td>
