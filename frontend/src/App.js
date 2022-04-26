@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Translation from "./component/Translation";
+import AdminTable from "./component/Admintable";
 
 const App = () => {
   // useState function to initialize the piece of state stored in translations with the array of translataion values passed in the props:
@@ -112,57 +112,10 @@ const App = () => {
           </button>
         </form>
         <h2>Translations</h2>
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>English</th>
-              <th>Finnish</th>
-              <th>Tag</th>
-            </tr>
-          </thead>
-          <tbody>
-            {translations.map((translation) => (
-              <tr key={translation.id}>
-                <td>{translation.english}</td>
-                <td>{translation.finnish}</td>
-                <td>{translation.tag_id}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {/* <ul>
-          {translations.map((translation) => (
-            <Translation key={translation.id} translation={translation} />
-          ))}
-        </ul> */}
+        <AdminTable />
       </div>
     </div>
   );
 };
-
-// class App extends React.Component {
-//   state = { translations: [] };
-//   async componentDidMount() {
-//     let response = await axios.get("http://localhost:8080/translations");
-//     this.setState({
-//       translations: response.data,
-//     });
-//   }
-
-//   render() {
-//     if (this.state.translations.length === 0) {
-//       return <p>loading...</p>;
-//     } else {
-//       let ui = this.state.translations.map((translation) => (
-//         <li key={translation.id}>
-//           {translation.id} - {translation.english} - {translation.finnish} -{" "}
-//           {translation.category}
-//         </li>
-//       ));
-//       console.log(ui);
-//       return <ul>{ui}</ul>;
-//     }
-//   }
-// }
 
 export default App;
