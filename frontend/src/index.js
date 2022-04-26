@@ -5,6 +5,7 @@ import { render } from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import AdminForm from "./routes/admin";
+import Home from "./routes/home";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -13,10 +14,8 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
+          <Route path="/" element={<Home />} />
           <Route path="/admin" element={<AdminForm />} />
-          {/* <Route path="completed" element={<Completed />} />
-          <Route path="incomplete" element={<Incomplete />} />
-          <Route path="app-info" element={<Info />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>
