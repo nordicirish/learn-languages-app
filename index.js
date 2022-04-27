@@ -38,10 +38,12 @@ app.get("/translations/sort-by-tag-desc", async (req, res) => {
 
 app.post("/translations/add", async (req, res) => {
   newTranslation = req.body;
-  console.log(newTranslation);
   try {
-    await database.save(newTranslation);
-    res.status(201);
+    //crudrepository response is database row id
+    id = await database.save(newTranslation);
+    //add id to object so it can be referenced for the reactKey
+    newTranslation.id = id;
+    console.log(newTranslation);
     res.send(newTranslation).end();
   } catch (err) {
     res.status(500).end();
