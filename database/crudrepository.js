@@ -46,7 +46,7 @@ let connectionFunctions = {
           if (err) {
             reject(err);
           }
-          resolve(result.affectedRows > 0);
+          resolve(result.insertId);
         });
       }
     });

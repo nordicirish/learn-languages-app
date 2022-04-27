@@ -13,6 +13,7 @@ const AdminTable = ({ translations }) => {
       </thead>
       <tbody>
         {translations.map((translation) => (
+          //add table row id to reference in update and delete operations
           <tr key={translation.id} id={translation.id}>
             <td>{translation.english}</td>
             <td>{translation.finnish}</td>
