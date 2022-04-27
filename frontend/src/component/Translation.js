@@ -1,5 +1,5 @@
 import React from "react";
-
+// redundant component functionality handle by Admin table
 const Translation = ({ translation }) => {
   return (
     <li>

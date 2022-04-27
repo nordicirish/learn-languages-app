@@ -5,9 +5,15 @@ import AdminTable from "../component/AdminTable";
 const AdminForm = () => {
   // useState function to initialize the piece of state stored in translations with the array of translataion values passed in the props:
   const [translations, setTranslations] = useState([]);
-  const [newEnglish, setNewEnglish] = useState("");
-  const [newFinnish, setNewFinnish] = useState("");
-  const [newTag, setNewTag] = useState("");
+  // const [newEnglish, setNewEnglish] = useState("");
+  // const [newFinnish, setNewFinnish] = useState("");
+  // const [newTag, setNewTag] = useState("");
+
+  const [newTranslation, setNewTranslation] = useState({
+    english: "",
+    finnish: "",
+    tag: "",
+  });
 
   //useEffect hooks fetches data using axios
   useEffect(() => {
@@ -22,13 +28,28 @@ const AdminForm = () => {
 
   // event handlers
 
+  const handleAddTranslationChange = (event) => {
+    event.preventDefault();
+    // gets the name attrribute of the field the user is typing into
+    const fieldName = event.target.getAttribute("name");
+    // gets the input typed into the field
+    const fieldValue = event.target.value;
+    // make a copy of the newTranslation object so its state is not mutated
+    // copy the newTranslation data using the spread operator to extra the data
+    const newTranslationCopy = { ...newTranslation };
+    // assign the relevant values to each key
+    newTranslationCopy[fieldName] = fieldValue;
+    // update the state of newTranslation
+    setNewTranslation(newTranslationCopy);
+  };
+
   const addTranslation = (event) => {
     event.preventDefault();
     //stops page reload and other unwanted default behaviour
     const translationObject = {
-      english: newEnglish,
-      finnish: newFinnish,
-      tag_id: newTag,
+      english: newTranslation.english,
+      finnish: newTranslation.finnish,
+      tag_id: newTranslation.tag,
     };
     axios
       .post("http://localhost:8080/translations/add", translationObject, {
@@ -39,26 +60,27 @@ const AdminForm = () => {
       .then((response) => {
         console.log(response);
         setTranslations(translations.concat(response.data));
-        setNewEnglish("");
-        setNewFinnish("");
-        setNewTag("");
+        console.log(response.data);
+        // clear form fields
+        Array.from(document.querySelectorAll("input")).forEach(
+          (input) => (input.value = "")
+        );
+        setNewTranslation({
+          newTranslation: { english: "", finnish: "", tag: "" },
+        });
       });
   };
+  // const handleEnglishChange = (event) => {
+  //   setNewEnglish(event.target.value);
+  // };
 
-  const handleEnglishChange = (event) => {
-    console.log(event.target.value);
-    setNewEnglish(event.target.value);
-  };
+  // const handleFinnishChange = (event) => {
+  //   setNewFinnish(event.target.value);
+  // };
 
-  const handleFinnishChange = (event) => {
-    console.log(event.target.value);
-    setNewFinnish(event.target.value);
-  };
-
-  const handleTagChange = (event) => {
-    console.log(event.target.value);
-    setNewTag(event.target.value);
-  };
+  // const handleTagChange = (event) => {
+  //   setNewTag(event.target.value);
+  // };
 
   return (
     <div className="container">
@@ -74,8 +96,7 @@ const AdminForm = () => {
               placeholder="Enter the English word"
               pattern="[a-zA-Z]*"
               title="The word should have only letters"
-              value={newEnglish}
-              onChange={handleEnglishChange}
+              onChange={handleAddTranslationChange}
             />
           </label>
 
@@ -88,8 +109,7 @@ const AdminForm = () => {
               placeholder="Finnish translation"
               pattern="[a-zA-ZäöåÄÖÅ]*"
               title="The word should have only letters"
-              value={newFinnish}
-              onChange={handleFinnishChange}
+              onChange={handleAddTranslationChange}
             />
           </label>
           <label>
@@ -101,8 +121,7 @@ const AdminForm = () => {
               placeholder="Tag"
               pattern="[a-zA-ZäöåÄÖÅ]*"
               title="The word should have only letters"
-              value={newTag}
-              onChange={handleTagChange}
+              onChange={handleAddTranslationChange}
             />
           </label>
 
