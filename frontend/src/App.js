@@ -6,10 +6,13 @@ const App = () => {
       <nav
         style={{
           borderBottom: "solid 1px",
+          padding: "1rem",
+          backgroundColor: "#03a9f4",
           fontSize: "2rem",
           textAlign: "center",
           paddingBottom: "1rem",
           marginBottom: "3rem",
+          fontFamily: "Tahoma, Verdana, Segoe, sans-serif",
         }}
       >
         <Link to="/">home</Link> | <Link to="/admin">Parent admin</Link> |{" "}
