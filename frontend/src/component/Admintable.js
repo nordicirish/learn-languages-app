@@ -13,7 +13,7 @@ const AdminTable = ({ translations }) => {
       </thead>
       <tbody>
         {translations.map((translation) => (
-          <tr key={translation.id}>
+          <tr key={translation.id} id={translation.id}>
             <td>{translation.english}</td>
             <td>{translation.finnish}</td>
             <td>{translation.tag_id}</td>
