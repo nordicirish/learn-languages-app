@@ -1,8 +1,6 @@
-// .env
 require("dotenv").config();
 const mysql = require("mysql");
 let translationSchema = require("../translation-schema.js");
-// const rangeSchema = require("../range-schema.js");
 const validate = require("../my-validator.js");
 const dbconfig = require("./dbconfig");
 const connection = mysql.createConnection(dbconfig);
@@ -34,9 +32,7 @@ let connectionFunctions = {
   save: (translation) => {
     // translation = { english: "squirrel", finnish: "orava", tag: 3 };
     return new Promise((resolve, reject) => {
-      // console.log(translation);
       let validation = validate(translation, translationSchema);
-      // console.log(translationSchema);
       if (validation.errors.length > 0) {
         reject(validation.errors);
         console.log(validation.errors);
@@ -113,56 +109,28 @@ let connectionFunctions = {
     });
   },
 
-  // filterByLat: (latitudeRange) => {
-  //   return new Promise((resolve, reject) => {
-  //     let validation = validate(latitudeRange, rangeSchema);
-  //     if (validation.errors.length > 0) {
-  //       reject(validation.errors);
-  //       console.log(validation.errors);
-  //     } else {
-  //       let sql = `SELECT * FROM locations WHERE latitude BETWEEN ? AND ?`;
-  //       connection.query(
-  //         sql,
-  //         [latitudeRange.lower, latitudeRange.upper],
-  //         (err, result) => {
-  //           //* @author Tanja Rannikko
-  //           // @author Jussi Pohjolainen
-  //           if (err) reject(err);
-  //           else if (result.length === 0) resolve(null);
-  //           else resolve(result);
-  //         }
-  //       );
-  //     }
-  //   });
-  // },
-
-  // sortByLat: () => {
-  //   return new Promise((resolve, reject) => {
-  //     connection.query(
-  //       `SELECT * FROM locations ORDER BY latitude `,
-  //       (err, locations) => {
-  //         if (err) {
-  //           reject(err);
-  //         }
-  //         resolve(locations);
-  //       }
-  //     );
-  //   });
-  // },
-
-  // sortByLong: () => {
-  //   return new Promise((resolve, reject) => {
-  //     connection.query(
-  //       `SELECT * FROM locations ORDER BY longitude `,
-  //       (err, locations) => {
-  //         if (err) {
-  //           reject(err);
-  //         }
-  //         resolve(locations);
-  //       }
-  //     );
-  //   });
-  // },
+  putById: (translation, id) => {
+    console.log(translation);
+    console.log(id);
+    return new Promise((resolve, reject) => {
+      let validation = validate(translation, translationSchema);
+      if (validation.errors.length > 0) {
+        reject(validation.errors);
+        console.log(validation.errors);
+      } else {
+        pool.query(
+          `UPDATE translations SET english = ?, finnish = ?, tag_id = ? WHERE id = ?`,
+          [translation.english, translation.finnish, translation.tag_id, id],
+          (err, result) => {
+            if (err) {
+              reject(err);
+            }
+            resolve(result.affectedRows > 0);
+          }
+        );
+      }
+    });
+  },
 };
 
 module.exports = connectionFunctions;
