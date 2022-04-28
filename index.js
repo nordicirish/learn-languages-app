@@ -43,14 +43,13 @@ app.post("/translations/add", async (req, res) => {
     id = await database.save(newTranslation);
     //add id to object so it can be referenced for the reactKey
     newTranslation.id = id;
-    console.log(newTranslation);
     res.send(newTranslation).end();
   } catch (err) {
     res.status(500).end();
   }
 });
 
-app.get("/translations/delete/:id([0-9]+)", async (req, res) => {
+app.delete("/translations/delete/:id([0-9]+)", async (req, res) => {
   id = req.params.id;
   console.log(id);
   try {
@@ -59,6 +58,21 @@ app.get("/translations/delete/:id([0-9]+)", async (req, res) => {
       ? res.status(404).send("Item not found").end()
       : res.status(200);
     res.send("Item deleted").end();
+  } catch (err) {
+    res.status(500).end();
+  }
+});
+
+app.put("/translations/update/:id([0-9]+)", async (req, res) => {
+  // translation = req.body;
+  translation = { english: "squirrel", finnish: "orava", tag_id: "Animals" };
+  id = req.params.id;
+  try {
+    let result = await database.putById(translation, id);
+    result === false
+      ? res.status(404).send("Item not found").end()
+      : res.status(200);
+    res.send(translation).end();
   } catch (err) {
     res.status(500).end();
   }
