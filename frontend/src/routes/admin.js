@@ -5,9 +5,6 @@ import AdminTable from "../component/AdminTable";
 const AdminForm = () => {
   // useState function to initialize the piece of state stored in translations with the array of translataion values passed in the props:
   const [translations, setTranslations] = useState([]);
-  // const [newEnglish, setNewEnglish] = useState("");
-  // const [newFinnish, setNewFinnish] = useState("");
-  // const [newTag, setNewTag] = useState("");
 
   const [newTranslation, setNewTranslation] = useState({
     english: "",
@@ -70,17 +67,6 @@ const AdminForm = () => {
         });
       });
   };
-  // const handleEnglishChange = (event) => {
-  //   setNewEnglish(event.target.value);
-  // };
-
-  // const handleFinnishChange = (event) => {
-  //   setNewFinnish(event.target.value);
-  // };
-
-  // const handleTagChange = (event) => {
-  //   setNewTag(event.target.value);
-  // };
 
   return (
     <div className="container">
