@@ -18,16 +18,21 @@ label {
 
 .container {
   display: flex;
-  align-items: center;
-  justify-content: center;
+    justify-content: center;
   min-height: 100vh;
+  margin: 2rem;
 }
-
+.navbar {
+    padding-left: 1rem;
+  margin-bottom: 1rem;
+}
 .box {
-  background-color: lightsalmon;
-  padding: 0 1.6rem 1.6rem 1.6rem;
+  background-color:aliceblue;
+  padding: 1.6rem;
   border-radius: 0.6rem;
   align-items: center;
+  width: 80%;
+  min-width: 80%
 }
 
 .input-form {
@@ -55,4 +60,19 @@ label {
 .admin-table th {
   text-align:left;
   font-size: 120%;
+}
+
+
+
+.table-dark {
+  --bs-table-bg: rgb(8, 66, 152)!important;
+  --bs-table-striped-bg: #69afe8!important;
+  --bs-table-striped-color: #fff;
+  --bs-table-active-bg: #4caf50!important;
+  --bs-table-active-color: #fff;
+  --bs-table-hover-bg: #ff5722!important;
+  --bs-table-hover-color: #fff;
+  color: #fff;
+  border-color: #373b3e;
+  
 }
