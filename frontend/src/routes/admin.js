@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import AdminTable from "../component/AdminTable";
+import AdminTable from "../components/AdminTable";
 
 const AdminForm = () => {
   // useState function to initialize the piece of state stored in translations with the array of translataion values passed in the props:
@@ -69,56 +69,55 @@ const AdminForm = () => {
   };
 
   return (
-    <div className="container">
-      <div className="box">
-        <h1>Learn Languages App</h1>
-        <form className="input-form" onSubmit={addTranslation}>
-          <label>
-            English word:{" "}
-            <input
-              type="text"
-              name="english"
-              required="required"
-              placeholder="Enter the English word"
-              pattern="[a-zA-Z]*"
-              title="The word should have only letters"
-              onChange={handleAddTranslationChange}
-            />
-          </label>
+    <>
+      <form className="input-form" onSubmit={addTranslation}>
+        <label>
+          English word:{" "}
+          <input
+            type="text"
+            name="english"
+            required="required"
+            placeholder="Enter the English word"
+            pattern="[a-zA-Z]*"
+            title="The word should have only letters"
+            onChange={handleAddTranslationChange}
+          />
+        </label>
 
-          <label>
-            Finnish word:{" "}
-            <input
-              type="text"
-              name="finnish"
-              required="required"
-              placeholder="Finnish translation"
-              pattern="[a-zA-ZäöåÄÖÅ]*"
-              title="The word should have only letters"
-              onChange={handleAddTranslationChange}
-            />
-          </label>
-          <label>
-            Tag:{" "}
-            <input
-              type="text"
-              name="tag"
-              required="required"
-              placeholder="Tag"
-              pattern="[a-zA-ZäöåÄÖÅ]*"
-              title="The word should have only letters"
-              onChange={handleAddTranslationChange}
-            />
-          </label>
+        <label>
+          Finnish word:{" "}
+          <input
+            type="text"
+            name="finnish"
+            required="required"
+            placeholder="Finnish translation"
+            pattern="[a-zA-ZäöåÄÖÅ]*"
+            title="The word should have only letters"
+            onChange={handleAddTranslationChange}
+          />
+        </label>
+        <label>
+          Tag:{" "}
+          <input
+            type="text"
+            name="tag"
+            required="required"
+            placeholder="Tag"
+            pattern="[a-zA-ZäöåÄÖÅ]*"
+            title="The word should have only letters"
+            onChange={handleAddTranslationChange}
+          />
+        </label>
 
-          <button className="input-button" stype="submit">
-            Save
-          </button>
-        </form>
-        <h2>Translations</h2>
-        <AdminTable translations={translations} />
-      </div>
-    </div>
+        <button className="input-button" stype="submit">
+          Save
+        </button>
+      </form>
+
+      <h2>Translations</h2>
+
+      <AdminTable translations={translations} />
+    </>
   );
 };
 
