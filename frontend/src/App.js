@@ -6,15 +6,16 @@ import "@fortawesome/fontawesome-free/js/all.js";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
+import Container from "react-bootstrap/esm/Container";
 
 function App() {
   return (
-    <div className="container">
+    <Container className="container">
       <div className="box">
         <NavBar />
         <Outlet />
       </div>
-    </div>
+    </Container>
   );
 }
 export default App;
