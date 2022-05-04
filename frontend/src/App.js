@@ -1,5 +1,4 @@
 import "./App.css";
-// import { Outlet, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
@@ -10,7 +9,7 @@ import Container from "react-bootstrap/esm/Container";
 
 function App() {
   return (
-    <Container className="container">
+    <Container className="main-container">
       <div className="box">
         <NavBar />
         <Outlet />
