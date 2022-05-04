@@ -10,7 +10,7 @@ import Container from "react-bootstrap/esm/Container";
 function App() {
   return (
     <Container className="main-container">
-      <div className="box">
+      <div className="page-box">
         <NavBar />
         <Outlet />
       </div>
