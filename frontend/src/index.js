@@ -3,9 +3,9 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
-import AdminForm from "./routes/admin";
 import Home from "./routes/home";
 import reportWebVitals from "./reportWebVitals";
+import Translations from "./routes/translations";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +14,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route path="/" element={<Home />} />
-          <Route path="/admin" element={<AdminForm />} />
+          <Route path="/translations" element={<Translations />} />
         </Route>
       </Routes>
     </BrowserRouter>
