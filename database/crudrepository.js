@@ -87,18 +87,18 @@ let connectionFunctions = {
     });
   },
 
-  // findById: (id) => {
-  //   let sql = `SELECT * FROM locations WHERE id = ? `;
-  //   return new Promise((resolve, reject) => {
-  //     connection.query(sql, [id], (err, result) => {
-  //       //* @author Tanja Rannikko
-  //       // @author Jussi Pohjolainen
-  //       if (err) reject(err);
-  //       else if (result.length === 0) resolve(null);
-  //       else resolve(result[0]);
-  //     });
-  //   });
-  // },
+  findById: (id) => {
+    let sql = `SELECT * FROM translations WHERE id = ? `;
+    return new Promise((resolve, reject) => {
+      connection.query(sql, [id], (err, result) => {
+        //* @author Tanja Rannikko
+        // @author Jussi Pohjolainen
+        if (err) reject(err);
+        else if (result.length === 0) resolve(null);
+        else resolve(result[0]);
+      });
+    });
+  },
 
   deleteById: (id) => {
     let sql = `DELETE from translations WHERE id = ? `;
