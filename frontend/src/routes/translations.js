@@ -16,11 +16,11 @@ const Translations = () => {
   const [translation, setTranslation] = useState({
     english: "",
     finnish: "",
-    tag: "",
+    tag_id: "",
   });
 
   //  Object Destructuring
-  const { english, finnish, tag } = translation;
+  const { english, finnish, tag_id } = translation;
   const onInputChange = (e) => {
     setTranslation({ ...translation, [e.target.name]: e.target.value });
   };
@@ -45,13 +45,8 @@ const Translations = () => {
   const submitTranslation = async (e) => {
     e.preventDefault();
     e.target.reset();
-    const translationObj = {
-      english: translation.english,
-      finnish: translation.finnish,
-      tag_id: translation.tag,
-    };
 
-    await axios.post("http://localhost:8080/translations/add", translationObj, {
+    await axios.post("http://localhost:8080/translations/add", translation, {
       headers: {
         "content-type": "application/json",
       },
@@ -59,7 +54,7 @@ const Translations = () => {
 
     await getTranslations();
     // clear form fields
-    setTranslation({ english: "", finnish: "", tag: "" });
+    setTranslation({ english: "", finnish: "", tag_id: "" });
     setShow(true);
   };
 
@@ -131,9 +126,9 @@ const Translations = () => {
                 <Form.Group className="mb-3">
                   <Form.Control
                     type="text"
-                    name="tag"
-                    id="tag"
-                    value={tag}
+                    name="tag_id"
+                    id="tag_id"
+                    value={tag_id}
                     onChange={(e) => onInputChange(e)}
                     placeholder="Enter the tag"
                     required
@@ -149,14 +144,14 @@ const Translations = () => {
           <div className="col-sm-8">
             <Table
               size="m"
-              className="table  table-hover  table-striped table-bordered  "
+              className="table admin-table table-hover  table-striped table-bordered  "
             >
               <thead className="thead-dark thead-blue">
                 <tr>
                   <th>English</th>
                   <th>Finnish</th>
                   <th>Tag</th>
-                  <th>Edit</th>
+                  <th style={{ width: "8.33%" }}>Edit</th>
                 </tr>
               </thead>
               <tbody>
@@ -187,7 +182,7 @@ const Translations = () => {
 
                       <Link
                         className=" mr-2"
-                        to={`/EditTranslation/editID/${translation.id}`}
+                        to={`/translations/edit/${translation.id}`}
                       >
                         <i className="fa fa-edit" aria-hidden="true"></i>
                       </Link>
