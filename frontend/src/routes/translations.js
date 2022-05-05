@@ -143,15 +143,16 @@ const Translations = () => {
           </div>
           <div className="col-sm-8">
             <Table
+              borderless
               size="m"
-              className="table admin-table table-hover  table-striped table-bordered  "
+              className="table admin-table table-striped   "
             >
               <thead className="thead-dark thead-blue">
                 <tr>
                   <th>English</th>
                   <th>Finnish</th>
-                  <th>Tag</th>
-                  <th style={{ width: "8.33%" }}>Edit</th>
+                  <th style={{ width: "22%" }}>Tag</th>
+                  <th style={{ width: "8%" }}>Edit</th>
                 </tr>
               </thead>
               <tbody>
