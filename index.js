@@ -49,6 +49,18 @@ app.post("/translations/add", async (req, res) => {
   }
 });
 
+app.get("/translations/find/:id([0-9]+)", async (req, res) => {
+  id = req.params.id;
+  console.log(id);
+  try {
+    let result = await database.findById(id);
+    result === false ? res.status(404).end() : res.status(200);
+    res.send(result).end();
+  } catch (err) {
+    res.status(500).end();
+  }
+});
+
 app.delete("/translations/delete/:id([0-9]+)", async (req, res) => {
   id = req.params.id;
   console.log(id);
@@ -64,8 +76,8 @@ app.delete("/translations/delete/:id([0-9]+)", async (req, res) => {
 });
 
 app.put("/translations/update/:id([0-9]+)", async (req, res) => {
-  // translation = req.body;
-  translation = { english: "squirrel", finnish: "orava", tag_id: "Animals" };
+  translation = req.body;
+  // translation = { english: "squirrel", finnish: "orava", tag_id: "Animals" };
   id = req.params.id;
   try {
     let result = await database.putById(translation, id);
