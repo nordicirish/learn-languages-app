@@ -90,7 +90,7 @@ let connectionFunctions = {
   findById: (id) => {
     let sql = `SELECT * FROM translations WHERE id = ? `;
     return new Promise((resolve, reject) => {
-      connection.query(sql, [id], (err, result) => {
+      pool.query(sql, [id], (err, result) => {
         //* @author Tanja Rannikko
         // @author Jussi Pohjolainen
         if (err) reject(err);
