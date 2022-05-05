@@ -29,10 +29,7 @@ const EditTranslation = () => {
 
   const updateTranslation = async (e) => {
     e.preventDefault();
-    await axios.put(
-      `http://localhost:8080/translations/update/${id}`,
-      translation
-    );
+    await axios.put(`http://localhost:8080/api/update/${id}`, translation);
     // navigates the browser back to the translations admin screen
     navigate("/translations");
   };
@@ -45,7 +42,7 @@ const EditTranslation = () => {
   // get translation to populate form fields
   const getTranslation = () => {
     axios
-      .get(`http://localhost:8080/translations/find/${id}`)
+      .get(`http://localhost:8080/api/find/${id}`)
       .then((response) => {
         console.log("promise fulfilled");
         setTranslation({
