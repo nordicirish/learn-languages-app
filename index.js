@@ -11,7 +11,7 @@ const database = require("./database/crudrepository.js");
 // app.use(express.static("public"));
 app.use(cors());
 
-app.get("/translations", async (req, res) => {
+app.get("/api/all", async (req, res) => {
   try {
     let result = await database.findAll();
     res.status(200).send(result).end();
@@ -19,7 +19,7 @@ app.get("/translations", async (req, res) => {
     res.status(500).end();
   }
 });
-app.get("/translations/sort-by-tag", async (req, res) => {
+app.get("/api/sort-by-tag", async (req, res) => {
   try {
     let result = await database.sortByTag();
     res.status(200).send(result).end();
@@ -27,7 +27,7 @@ app.get("/translations/sort-by-tag", async (req, res) => {
     res.status(500).end();
   }
 });
-app.get("/translations/sort-by-tag-desc", async (req, res) => {
+app.get("/api/sort-by-tag-desc", async (req, res) => {
   try {
     let result = await database.sortByTagDesc();
     res.status(200).send(result).end();
@@ -36,7 +36,7 @@ app.get("/translations/sort-by-tag-desc", async (req, res) => {
   }
 });
 
-app.post("/translations/add", async (req, res) => {
+app.post("/api/add", async (req, res) => {
   newTranslation = req.body;
   try {
     //crudrepository response is database row id
@@ -49,7 +49,7 @@ app.post("/translations/add", async (req, res) => {
   }
 });
 
-app.get("/translations/find/:id([0-9]+)", async (req, res) => {
+app.get("/api/find/:id([0-9]+)", async (req, res) => {
   id = req.params.id;
   console.log(id);
   try {
@@ -61,7 +61,7 @@ app.get("/translations/find/:id([0-9]+)", async (req, res) => {
   }
 });
 
-app.delete("/translations/delete/:id([0-9]+)", async (req, res) => {
+app.delete("/api/delete/:id([0-9]+)", async (req, res) => {
   id = req.params.id;
   console.log(id);
   try {
@@ -75,7 +75,7 @@ app.delete("/translations/delete/:id([0-9]+)", async (req, res) => {
   }
 });
 
-app.put("/translations/update/:id([0-9]+)", async (req, res) => {
+app.put("/api/update/:id([0-9]+)", async (req, res) => {
   translation = req.body;
   // translation = { english: "squirrel", finnish: "orava", tag_id: "Animals" };
   id = req.params.id;
