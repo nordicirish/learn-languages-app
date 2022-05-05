@@ -28,7 +28,7 @@ const Translations = () => {
   // On Page load display all records
   const getTranslations = () => {
     axios
-      .get("http://localhost:8080/translations")
+      .get("http://localhost:8080/api/all")
       .then((response) => {
         console.log("promise fulfilled");
         setTranslations(response.data);
@@ -46,7 +46,7 @@ const Translations = () => {
     e.preventDefault();
     e.target.reset();
 
-    await axios.post("http://localhost:8080/translations/add", translation, {
+    await axios.post("http://localhost:8080/api/add", translation, {
       headers: {
         "content-type": "application/json",
       },
@@ -61,7 +61,7 @@ const Translations = () => {
   // Delete Translation
   const deleteTranslation = (id) => {
     axios
-      .delete(`http://localhost:8080/translations/delete/${id}`)
+      .delete(`http://localhost:8080/api/delete/${id}`)
       .then((result) => {
         getTranslations();
       })
