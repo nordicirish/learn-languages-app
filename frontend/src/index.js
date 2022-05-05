@@ -6,6 +6,7 @@ import App from "./App";
 import Home from "./routes/home";
 import reportWebVitals from "./reportWebVitals";
 import Translations from "./routes/translations";
+import EditTranslation from "./routes/edit";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,6 +16,7 @@ root.render(
         <Route path="/" element={<App />}>
           <Route path="/" element={<Home />} />
           <Route path="/translations" element={<Translations />} />
+          <Route path="/translations/edit/:id" element={<EditTranslation />} />
         </Route>
       </Routes>
     </BrowserRouter>
