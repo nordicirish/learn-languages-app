@@ -60,10 +60,30 @@ label {
   width:100%;
   height:100%;
   min-width:100%;
+border-style: hidden!important
+}
+
+.admin-table tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+  border-spacing: 2rem !important;
+  border-collapse:separate!important;
+  border-color: aliceblue !important;
+  border-style: solid;
+    border-radius: 2rem !important;
+  /* border-style: hidden  !important */
 }
 .admin-table th {
   text-align:center;
   font-size: 120%;
+  border-style: hidden  !important
+  
+}
+.admin-table tr{
+  padding-left:2rem !important;
 }
 
 
