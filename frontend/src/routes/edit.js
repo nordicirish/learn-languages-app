@@ -16,7 +16,7 @@ const EditTranslation = () => {
     finnish: "",
     tag_id: "",
   });
-
+  // destructure the translation object and assign it's values the named variables
   const { english, finnish, tag_id } = translation;
 
   const onInputChange = (e) => {
@@ -33,7 +33,7 @@ const EditTranslation = () => {
       `http://localhost:8080/translations/update/${id}`,
       translation
     );
-
+    // navigates the browser back to the translations admin screen
     navigate("/translations");
   };
 
@@ -42,7 +42,7 @@ const EditTranslation = () => {
     e.preventDefault();
     navigate("/translations");
   };
-
+  // get translation to populate form fields
   const getTranslation = () => {
     axios
       .get(`http://localhost:8080/translations/find/${id}`)
