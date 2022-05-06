@@ -12,9 +12,6 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "./frontend/build")));
 
 app.use(cors());
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "./frontend/build", "index.html"));
-});
 
 // Handle GET requests to /api route
 app.get("/api/all", async (req, res) => {
@@ -94,6 +91,11 @@ app.put("/api/update/:id([0-9]+)", async (req, res) => {
   } catch (err) {
     res.status(500).end();
   }
+});
+// need to keep at the bottom so other api requests can run
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./frontend/build", "index.html"));
 });
 
 const server = app.listen(port, () => {
