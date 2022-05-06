@@ -2,15 +2,17 @@ const express = require("express");
 const app = express();
 var cors = require("cors");
 const port = process.env.PORT || 8080;
+//needed for express.static
+const path = require("path");
 require("dotenv").config();
-// const mysql = require("mysql");
-app.use(express.static("frontend/build"));
-// post won't work withu'out express.json
+// post won't work without express.json
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, "./frontend/build")));
 const database = require("./database/crudrepository.js");
-// app.use(express.static("public"));
 app.use(cors());
-
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "./frontend/build", "index.html"));
+// });
 app.get("/api/all", async (req, res) => {
   try {
     let result = await database.findAll();
