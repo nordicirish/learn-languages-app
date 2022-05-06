@@ -6,6 +6,10 @@ A foreign language vocabulary training app for kids.
 
 Roger Graham
 
+## Demo website
+
+https://nordicirish-learn-languages.herokuapp.com/
+
 ## Requirements
 
 Node.js
