@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-
+// "proxy": "http://localhost:8080" in package.json allows short urls
 const EditTranslation = () => {
   //useNavigate hook allows to navigate away from the current url
   let navigate = useNavigate();
@@ -29,7 +29,7 @@ const EditTranslation = () => {
 
   const updateTranslation = async (e) => {
     e.preventDefault();
-    await axios.put(`http://localhost:8080/api/update/${id}`, translation);
+    await axios.put(`/api/update/${id}`, translation);
     // navigates the browser back to the translations admin screen
     navigate("/translations");
   };
@@ -42,7 +42,7 @@ const EditTranslation = () => {
   // get translation to populate form fields
   const getTranslation = () => {
     axios
-      .get(`http://localhost:8080/api/find/${id}`)
+      .get(`/api/find/${id}`)
       .then((response) => {
         console.log("promise fulfilled");
         setTranslation({
