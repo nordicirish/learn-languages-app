@@ -7,6 +7,8 @@ import Button from "react-bootstrap/Button";
 import Toast from "react-bootstrap/Toast";
 import Container from "react-bootstrap/Container";
 
+// "proxy": "http://localhost:8080" in package.json allows short urls
+
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 const Translations = () => {
@@ -28,7 +30,7 @@ const Translations = () => {
   // On Page load display all records
   const getTranslations = () => {
     axios
-      .get("http://localhost:8080/api/all")
+      .get("/api/all")
       .then((response) => {
         console.log("promise fulfilled");
         setTranslations(response.data);
@@ -46,7 +48,7 @@ const Translations = () => {
     e.preventDefault();
     e.target.reset();
 
-    await axios.post("http://localhost:8080/api/add", translation, {
+    await axios.post("/api/add", translation, {
       headers: {
         "content-type": "application/json",
       },
@@ -61,7 +63,7 @@ const Translations = () => {
   // Delete Translation
   const deleteTranslation = (id) => {
     axios
-      .delete(`http://localhost:8080/api/delete/${id}`)
+      .delete(`/api/delete/${id}`)
       .then((result) => {
         getTranslations();
       })
