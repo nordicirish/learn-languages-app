@@ -1,35 +1,46 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
+import DeleteModal from "./DeleteModal";
+import { Link } from "react-router-dom";
 
 // pass translations as a named prop to ensure it is passed as an array
 // set an attribute translations = {translations} in component tag in app.js
-const AdminTable = ({ translations }) => {
+const AdminTable = ({ translations, deleteTranslation }) => {
   return (
-    <Table
-      striped
-      bordered
-      hover
-      variant="primary dark"
-      className="admin-table table-dark"
-    >
-      <thead className="thead-dark">
-        <tr>
-          <th>English</th>
-          <th>Finnish</th>
-          <th>Tag</th>
-        </tr>
-      </thead>
-      <tbody>
-        {translations.map((translation) => (
-          //add table row id to reference in update and delete operations
-          <tr key={translation.id} id={translation.id}>
-            <td>{translation.english}</td>
-            <td>{translation.finnish}</td>
-            <td>{translation.tag_id}</td>
+    <div className="col-sm-8">
+      <Table borderless size="m" className="table admin-table table-striped   ">
+        <thead className="thead-dark thead-blue">
+          <tr>
+            <th>English</th>
+            <th>Finnish</th>
+            <th style={{ width: "22%" }}>Tag</th>
+            <th style={{ width: "8%" }}>Edit</th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {translations.map((translation) => (
+            <tr key={translation.id}>
+              <td>{translation.english}</td>
+              <td>{translation.finnish}</td>
+              <td>{translation.tag_id}</td>
+              <td>
+                <DeleteModal
+                  translation={translation}
+                  deleteTranslation={deleteTranslation}
+                />
+
+                <Link
+                  className=" mr-2"
+                  to={`/translations/edit/${translation.id}`}
+                >
+                  <i className="fa fa-edit" aria-hidden="true"></i>
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </div>
   );
 };
 

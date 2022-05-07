@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Toast from "react-bootstrap/Toast";
 import Container from "react-bootstrap/Container";
-import DeleteModal from "../components/DeleteModal";
+
+import AdminTable from "../components/AdminTable";
 
 // "proxy": "http://localhost:8080" in package.json allows short urls
 
@@ -164,8 +163,11 @@ const Translations = () => {
               </Form>
             </div>
           </div>
-
-          <div className="col-sm-8">
+          <AdminTable
+            translations={translations}
+            deleteTranslation={deleteTranslation}
+          />
+          {/* <div className="col-sm-8">
             <Table
               borderless
               size="m"
@@ -202,7 +204,7 @@ const Translations = () => {
                 ))}
               </tbody>
             </Table>
-          </div>
+          </div> */}
         </div>
       </Container>
     </section>
