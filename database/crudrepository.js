@@ -59,6 +59,17 @@ let connectionFunctions = {
     });
   },
 
+  findTags: () => {
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT * from tags`, (err, tags) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(tags);
+      });
+    });
+  },
+
   sortByTag: () => {
     return new Promise((resolve, reject) => {
       pool.query(
