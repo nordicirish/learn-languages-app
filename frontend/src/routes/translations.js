@@ -21,10 +21,12 @@ const Translations = () => {
     tag_id: "",
   });
 
+  const [tags, setTags] = useState([]);
+
   //  Object Destructuring
   const { english, finnish, tag_id } = translation;
   const onInputChange = (e) => {
-    setTranslation({ ...translation, [e.target.name]: e.target.value });
+    setTranslation({ ...translation, [e.target.id]: e.target.value });
   };
 
   // On Page load display all records
@@ -43,21 +45,40 @@ const Translations = () => {
     getTranslations();
   }, []);
 
+  const getTags = () => {
+    axios
+      .get("/api/Tags")
+      .then((response) => {
+        console.log("promise fulfilled");
+        setTags(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  useEffect(() => {
+    getTags();
+  }, []);
+
   // Insert Translation
   const submitTranslation = async (e) => {
-    e.preventDefault();
-    e.target.reset();
+    if (translation.tag_id.length > 0) {
+      e.preventDefault();
+      e.target.reset();
 
-    await axios.post("/api/add", translation, {
-      headers: {
-        "content-type": "application/json",
-      },
-    });
-
-    await getTranslations();
-    // clear form fields
-    setTranslation({ english: "", finnish: "", tag_id: "" });
-    setShow(true);
+      await axios.post("/api/add", translation, {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      await getTranslations();
+      // clear form fields
+      setTranslation({ english: "", finnish: "", tag_id: "" });
+      // setShow(true);
+    } else {
+      e.preventDefault();
+      window.alert("select a tag");
+    }
   };
 
   // Delete Translation
@@ -68,10 +89,10 @@ const Translations = () => {
         getTranslations();
       })
       .catch(() => {
-        alert("Oops something went wrong");
+        window.alert("Oops something went wrong");
       });
   };
-
+  // render(console.log(translation.tag_id));
   return (
     <section>
       <Toast
@@ -125,7 +146,7 @@ const Translations = () => {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3">
+                {/* <Form.Group className="mb-3">
                   <Form.Control
                     type="text"
                     name="tag_id"
@@ -137,12 +158,27 @@ const Translations = () => {
                     pattern="[a-zA-Z]*"
                     title="The word should have only English letters"
                   />
+                </Form.Group> */}
+                <Form.Group className="mb-3">
+                  <Form.Select
+                    id="tag_id"
+                    value={tag_id}
+                    onChange={(e) => onInputChange(e)}
+                    aria-label="Default select example"
+                  >
+                    <option>Select a tag</option>
+                    {tags.map((tag) => (
+                      <option key={tag.tag} value={tag.tag}>
+                        {tag.tag}
+                      </option>
+                    ))}
+                  </Form.Select>
                 </Form.Group>
-
                 <Button type="submit">Add</Button>
               </Form>
             </div>
           </div>
+
           <div className="col-sm-8">
             <Table
               borderless
@@ -163,14 +199,15 @@ const Translations = () => {
                     <td>{translation.english}</td>
                     <td>{translation.finnish}</td>
                     <td>{translation.tag_id}</td>
-
                     <td>
                       <a
                         className="red-bin mr-2"
                         onClick={() => {
                           const confirmBox = window.confirm(
-                            "Are you sure that you want to delete " +
-                              translation.english
+                            "Are you sure that you want to delete this translation? " +
+                              translation.english +
+                              " " +
+                              translation.finnish
                           );
                           if (confirmBox === true) {
                             deleteTranslation(translation.id);
