@@ -6,6 +6,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Toast from "react-bootstrap/Toast";
 import Container from "react-bootstrap/Container";
+import DeleteModal from "../components/DeleteModal";
 
 // "proxy": "http://localhost:8080" in package.json allows short urls
 
@@ -62,8 +63,8 @@ const Translations = () => {
 
   // Insert Translation
   const submitTranslation = async (e) => {
-    e.preventDefault();
-    e.target.reset();
+    await e.preventDefault();
+    await e.target.reset();
 
     await axios.post("/api/add", translation, {
       headers: {
@@ -185,25 +186,10 @@ const Translations = () => {
                     <td>{translation.finnish}</td>
                     <td>{translation.tag_id}</td>
                     <td>
-                      <a
-                        className="red-bin mr-2"
-                        onClick={() => {
-                          const confirmBox = window.confirm(
-                            "Are you sure that you want to delete this translation? " +
-                              translation.english +
-                              " " +
-                              translation.finnish
-                          );
-                          if (confirmBox === true) {
-                            deleteTranslation(translation.id);
-                          }
-                        }}
-                      >
-                        <i
-                          className="far fa-trash-alt"
-                          style={{ fontSize: "18px", marginRight: "5px" }}
-                        ></i>
-                      </a>
+                      <DeleteModal
+                        translation={translation}
+                        deleteTranslation={deleteTranslation}
+                      />
 
                       <Link
                         className=" mr-2"
