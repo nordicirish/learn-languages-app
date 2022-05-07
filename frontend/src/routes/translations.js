@@ -62,23 +62,18 @@ const Translations = () => {
 
   // Insert Translation
   const submitTranslation = async (e) => {
-    if (translation.tag_id.length > 0) {
-      e.preventDefault();
-      e.target.reset();
+    e.preventDefault();
+    e.target.reset();
 
-      await axios.post("/api/add", translation, {
-        headers: {
-          "content-type": "application/json",
-        },
-      });
-      await getTranslations();
-      // clear form fields
-      setTranslation({ english: "", finnish: "", tag_id: "" });
-      // setShow(true);
-    } else {
-      e.preventDefault();
-      window.alert("select a tag");
-    }
+    await axios.post("/api/add", translation, {
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    await getTranslations();
+    // clear form fields
+    setTranslation({ english: "", finnish: "", tag_id: "" });
+    // setShow(true);
   };
 
   // Delete Translation
@@ -125,6 +120,7 @@ const Translations = () => {
                     value={english}
                     onChange={(e) => onInputChange(e)}
                     placeholder="Enter the English word"
+                    aria-label="Enter the Finnish translation"
                     required
                     pattern="[a-zA-Z]*"
                     title="The word should have only English letters"
@@ -140,33 +136,22 @@ const Translations = () => {
                     value={finnish}
                     onChange={(e) => onInputChange(e)}
                     placeholder="Enter the Finnish translation"
+                    aria-label="Enter the Finnish translation"
                     pattern="[a-zA-ZäöåÄÖÅ]*"
                     title="The word should have only letters"
                     required
                   />
                 </Form.Group>
 
-                {/* <Form.Group className="mb-3">
-                  <Form.Control
-                    type="text"
-                    name="tag_id"
-                    id="tag_id"
-                    value={tag_id}
-                    onChange={(e) => onInputChange(e)}
-                    placeholder="Enter the tag"
-                    required
-                    pattern="[a-zA-Z]*"
-                    title="The word should have only English letters"
-                  />
-                </Form.Group> */}
                 <Form.Group className="mb-3">
                   <Form.Select
                     id="tag_id"
                     value={tag_id}
                     onChange={(e) => onInputChange(e)}
-                    aria-label="Default select example"
+                    aria-label="Please select a tag"
+                    required
                   >
-                    <option>Select a tag</option>
+                    <option value="">Select a tag</option>
                     {tags.map((tag) => (
                       <option key={tag.tag} value={tag.tag}>
                         {tag.tag}
