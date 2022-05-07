@@ -22,6 +22,15 @@ app.get("/api/all", async (req, res) => {
     res.status(500).end();
   }
 });
+
+app.get("/api/tags", async (req, res) => {
+  try {
+    let result = await database.findTags();
+    res.status(200).send(result).end();
+  } catch (err) {
+    res.status(500).end();
+  }
+});
 app.get("/api/sort-by-tag", async (req, res) => {
   try {
     let result = await database.sortByTag();
