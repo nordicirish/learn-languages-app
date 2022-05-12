@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -6,12 +6,16 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "bootstrap/dist/css/bootstrap.min.css";
 import InputGroup from "react-bootstrap/InputGroup";
+import { ButtonGroup } from "react-bootstrap";
 
 const Home = () => {
-  // useState function to initialize the piece of state stored in translations with the array of translataion values passed in the props:
   const [translations, setTranslations] = useState([]);
-  const [correctAnswer, setCorrectAnswer] = useState("");
-  const [userAnswer, setUserAnswer] = useState("");
+  const [counter, setCounter] = useState(0);
+  const [show, setShow] = useState({});
+  const [currentId, setCurrentId] = useState(null);
+  // const [valid, setValid] = useState(false);
+  const increment = () => setCounter((count) => count + 1);
+
   const getTranslations = () => {
     axios
       .get("/api/all")
@@ -27,62 +31,95 @@ const Home = () => {
     getTranslations();
   }, []);
 
-  const submitAnswer = async (e) => {
-    e.preventDefault();
-    alert("correct answer " + correctAnswer);
-    alert("submitted answer " + userAnswer);
-  };
-  // const finnish = translation.finnish;
+  useEffect(() => {
+    console.log("id " + id);
+    console.log("counter " + counter);
+  });
+
+  const [questionAnswer, setQuestionAnswer] = useState({
+    id: null,
+    rightAnswer: "",
+    userAnswer: "",
+  });
+  const { id, rightAnswer, userAnswer } = questionAnswer;
+
   const onInputChange = (e) => {
-    setCorrectAnswer(e.target.name);
-    setUserAnswer(e.target.value);
+    setQuestionAnswer({
+      ...questionAnswer,
+      id: e.target.id,
+      rightAnswer: e.target.name,
+      userAnswer: e.target.value,
+    });
+
+    // const nextSibling = document.querySelector(`input[name=${rightAnswer}]`);
+
+    // // If found, focus the next field
+    // if (nextSibling !== null) {
+    //   nextSibling.focus();
+    // }
+  };
+
+  const submitAnswer = (e) => {
+    e.preventDefault();
+
+    if (rightAnswer.length > 0 && rightAnswer === userAnswer) {
+      increment();
+      const attr = document.createAttribute("class");
+      attr.value = "correct-input";
+      const correctInput = document.getElementById(id);
+      correctInput.setAttributeNode(attr);
+      correctInput.ariaDisabled = true;
+      correctInput.disabled = true;
+    }
   };
 
   return (
-    <div className="row mt-4">
-      <div className="col-sm-8 col-offset-3 mx-auto shadow p-5">
+    <div className="row mt-4 text-center">
+      <div className=" col-sm-10 col-offset-3 mx-auto shadow p-5 ">
         <h4 className="text-center mb-4">Test yourself</h4>
         <Form>
           {translations.map((translation) => (
-            <Row key={translation.id} className="align-items-center">
-              <Col sm={5} className="my-1">
+            <Row
+              key={translation.id}
+              // id={translation.id}
+              className="justify-content-center"
+            >
+              <Col sm={12} m={12} lg={10} className="my-1">
                 <InputGroup size="lg">
-                  <InputGroup.Text
-                    id="language1"
-                    aria-describedby="English word"
-                  >
+                  <InputGroup.Text aria-describedby="English word">
                     {translation.english}
                   </InputGroup.Text>
-                  <Form.Control
-                    id={translation.id}
-                    name={translation.finnish}
-                    placeholder="Finnish word"
-                    onChange={(e) => onInputChange(e)}
-                    aria-label="Enter the Finnish translation"
-                    pattern="[a-zA-ZäöåÄÖÅ]*"
-                    title="The word should have only letters"
-                    required
-                  />
-                  <Form.Label
-                    id="correct"
-                    htmlFor="inlineFormInputGroupUsername"
-                    visuallyHidden
-                  >
-                    You got it right!
-                  </Form.Label>
-                  <Form.Label
-                    htmlFor="inlineFormInputGroupUsername"
-                    visuallyHidden
-                  >
-                    Oops wrong answer!
-                  </Form.Label>
+
+                  {show && (
+                    <Form.Control
+                      id={translation.id}
+                      name={translation.finnish}
+                      placeholder="Finnish word"
+                      autoComplete="off"
+                      onChange={(e) => onInputChange(e)}
+                      aria-label="Enter the Finnish translation"
+                      pattern="[a-zA-ZäöåÄÖÅ]*"
+                      title="The word should have only letters"
+                      required
+                    />
+                  )}
                 </InputGroup>
               </Col>
-
-              <Col xs="auto" className="my-1">
-                <Button type="submit" onClick={submitAnswer}>
-                  Answer
-                </Button>
+              <Col>
+                <ButtonGroup
+                  className="d-grid gap-2 col-12 mx-auto"
+                  id={translation.id}
+                >
+                  <Button
+                    id={translation.id}
+                    name={translation.finnish}
+                    value={userAnswer}
+                    type="button"
+                    onClick={(e) => submitAnswer(e)}
+                  >
+                    Answer
+                  </Button>
+                </ButtonGroup>
               </Col>
             </Row>
           ))}
