@@ -113,10 +113,10 @@ tr {
   border: 1px solid transparent;
   border-radius: .3rem;
     /* margin-bottom: 0!important; */
-  font-size: 1.25rem;
+  font-size: calc(1.325rem + .9vw) !important;
   flex: 1 1 auto;
   color: #0f5132;
-   
+    
   padding: 0rem 1rem!important;
   max-width:50%
   
