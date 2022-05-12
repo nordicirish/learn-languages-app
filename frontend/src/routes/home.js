@@ -75,7 +75,7 @@ const Home = () => {
 
   return (
     <div className="row mt-4 text-center">
-      <div className=" col-sm-10 col-offset-3 mx-auto shadow p-5 ">
+      <div className=" col-sm-11 col-offset-3 mx-auto shadow p-5 ">
         <h4 className="text-center mb-4">Test yourself</h4>
         <Form>
           {translations.map((translation) => (
@@ -86,12 +86,16 @@ const Home = () => {
             >
               <Col sm={12} m={12} lg={10} className="my-1">
                 <InputGroup size="lg">
-                  <InputGroup.Text aria-describedby="English word">
+                  <InputGroup.Text
+                    className="bg-info bg-gradient fs-2 text"
+                    aria-describedby="English word"
+                  >
                     {translation.english}
                   </InputGroup.Text>
 
                   {show && (
                     <Form.Control
+                      className="fs-2 text"
                       id={translation.id}
                       name={translation.finnish}
                       placeholder="Finnish word"
@@ -105,12 +109,13 @@ const Home = () => {
                   )}
                 </InputGroup>
               </Col>
-              <Col>
+              <Col className="my-auto">
                 <ButtonGroup
                   className="d-grid gap-2 col-12 mx-auto"
                   id={translation.id}
                 >
                   <Button
+                    size="lg"
                     id={translation.id}
                     name={translation.finnish}
                     value={userAnswer}
