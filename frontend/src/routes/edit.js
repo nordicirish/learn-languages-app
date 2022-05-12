@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-// "proxy": "http://localhost:8080" in package.json allows short urls
+
 const EditTranslation = () => {
   //useNavigate hook allows to navigate away from the current url
   let navigate = useNavigate();
@@ -16,30 +16,13 @@ const EditTranslation = () => {
     finnish: "",
     tag_id: "",
   });
+
+  const [tags, setTags] = useState([]);
   // destructure the translation object and assign it's values the named variables
   const { english, finnish, tag_id } = translation;
-
   const onInputChange = (e) => {
-    setTranslation({ ...translation, [e.target.name]: e.target.value });
+    setTranslation({ ...translation, [e.target.id]: e.target.value });
   };
-
-  useEffect(() => {
-    getTranslation();
-  }, []);
-
-  const updateTranslation = async (e) => {
-    e.preventDefault();
-    await axios.put(`/api/update/${id}`, translation);
-    // navigates the browser back to the translations admin screen
-    navigate("/translations");
-  };
-
-  const cancelUpdate = async (e) => {
-    // prevents buton acting as a submit button
-    e.preventDefault();
-    navigate("/translations");
-  };
-  // get translation to populate form fields
   const getTranslation = () => {
     axios
       .get(`/api/find/${id}`)
@@ -57,16 +40,50 @@ const EditTranslation = () => {
       });
   };
 
+  useEffect(() => {
+    getTranslation();
+  }, []);
+
+  const getTags = () => {
+    axios
+      .get("/api/Tags")
+      .then((response) => {
+        console.log("promise fulfilled");
+        setTags(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  useEffect(() => {
+    getTags();
+  }, []);
+
+  const updateTranslation = async (e) => {
+    e.preventDefault();
+    await axios.put(`/api/update/${id}`, translation);
+    // navigates the browser back to the translations admin screen
+    navigate("/translations");
+  };
+
+  const cancelUpdate = async (e) => {
+    // prevents buton acting as a submit button
+    e.preventDefault();
+    navigate("/translations");
+  };
+  // get translation to populate form fields
+
   return (
     <Container>
       <div className="row mt-4">
-        <div className="col-sm-5 col-offset-3 mx-auto shadow p-5">
+        <div className=" col-8 col-sm-8 col-md-6 col-lg-5 col-xl-4 col-offset-3 mx-auto shadow p-5">
           <h4 className="text-center mb-4">Edit a translation</h4>
           <Form>
             <Form.Group className="mb-3">
               <Form.Control
                 as="input"
                 type="text"
+                id="english"
                 name="english"
                 value={english}
                 onChange={(e) => onInputChange(e)}
@@ -81,6 +98,7 @@ const EditTranslation = () => {
               <Form.Control
                 as="input"
                 type="text"
+                id="finnish"
                 name="finnish"
                 value={finnish}
                 onChange={(e) => onInputChange(e)}
@@ -92,6 +110,24 @@ const EditTranslation = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
+              <Form.Select
+                id="tag_id"
+                name="tag_id"
+                onChange={(e) => onInputChange(e)}
+                aria-label="Please select a tag"
+                value={tag_id}
+                required
+              >
+                <option value="">Select a tag</option>
+                {tags.map((tag) => (
+                  <option key={tag.tag} value={tag.tag}>
+                    {tag.tag}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+
+            {/* <Form.Group className="mb-3">
               <Form.Control
                 type="text"
                 name="tag"
@@ -102,7 +138,7 @@ const EditTranslation = () => {
                 pattern="[a-zA-Z]*"
                 title="The word should have only English letters"
               />
-            </Form.Group>
+            </Form.Group> */}
 
             <Button type="submit" id="1" onClick={updateTranslation}>
               Update
