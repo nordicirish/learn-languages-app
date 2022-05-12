@@ -4,10 +4,12 @@ import Toast from "react-bootstrap/Toast";
 import Container from "react-bootstrap/Container";
 import AdminTable from "../components/AdminTable";
 import SubmitForm from "../components/SubmitForm";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 // "proxy": "http://localhost:8080" in package.json allows short urls
 
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Translations = () => {
   const [translations, setTranslations] = useState([]);
@@ -95,18 +97,29 @@ const Translations = () => {
         <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
       </Toast>
       <Container>
-        <div className="row d-flex flex-row-reverse mt-3">
-          <SubmitForm
-            tags={tags}
-            translation={translation}
-            submitTranslation={submitTranslation}
-            setTranslation={setTranslation}
-          />
-          <AdminTable
-            translations={translations}
-            deleteTranslation={deleteTranslation}
-          />
-        </div>
+        <Row
+          className="justify-content-center  d-flex
+          flex-row-reverse"
+          xs="12"
+          md="12"
+          lg="12"
+        >
+          <Col xs="9" sm="8" md="6" lg="4" xl="4">
+            <SubmitForm
+              tags={tags}
+              translation={translation}
+              submitTranslation={submitTranslation}
+              setTranslation={setTranslation}
+            />
+          </Col>
+          <Col md="12" lg="8" xl="8">
+            <AdminTable
+              tags={tags}
+              translations={translations}
+              deleteTranslation={deleteTranslation}
+            />
+          </Col>
+        </Row>
       </Container>
     </section>
   );
