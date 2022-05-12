@@ -68,9 +68,7 @@ tr {
   
   
 }
-.admin-table tr{
-  /* padding-left: .5rem !important; */
-}
+
 
 
 .thead-blue {
@@ -104,4 +102,22 @@ tr {
   --bs-text-opacity: 1;
   /* bootsrap color attributes */
   color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
+}
+.input-group-text {
+  width: 50%;
+  min-width: 50%;
+}
+.correct-input{
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+  border: 1px solid transparent;
+  border-radius: .3rem;
+    /* margin-bottom: 0!important; */
+  font-size: 1.25rem;
+  flex: 1 1 auto;
+  color: #0f5132;
+   
+  padding: 0rem 1rem!important;
+  max-width:50%
+  
 }
