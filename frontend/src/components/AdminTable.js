@@ -9,7 +9,7 @@ const AdminTable = ({ tags, translations, deleteTranslation }) => {
   return (
     <div className="col-sm-12">
       <Table borderless size="m" className="table admin-table table-striped   ">
-        <thead className="thead-dark thead-blue">
+        <thead className="thead-blue text-light text-center bg-primary bg-gradient fs-4">
           <tr>
             <th>English</th>
             <th>Finnish</th>
@@ -19,7 +19,7 @@ const AdminTable = ({ tags, translations, deleteTranslation }) => {
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-center fs-5">
           {translations.map((translation) => (
             <tr key={translation.id}>
               <td>{translation.english}</td>
