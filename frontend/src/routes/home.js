@@ -1,14 +1,10 @@
 import React, { useState, useEffect, render, useCallback } from "react";
 import axios from "axios";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Alert } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import InputGroup from "react-bootstrap/InputGroup";
-import { ButtonGroup } from "react-bootstrap";
 import GameForm from "../components/GameForm";
 
 const Home = () => {
@@ -48,17 +44,30 @@ const Home = () => {
   console.log("render", correct, isDisabled);
 
   const update = async (e) => {
-    if (userAnswer.length > 0 && userAnswer === rightAnswer) {
-      setCorrect(true);
-      const correctInput = document.getElementById(id);
-      const attr = document.createAttribute("class");
-      attr.value = "correct-input";
-      correctInput.setAttributeNode(attr);
-      correctInput.ariaDisabled = true;
-      correctInput.disabled = true;
-      increment();
-    } else {
-      setCorrect(false);
+    ///trim out spaces and convert both to saame case for comparison
+    let userTrim = userAnswer.trim();
+    let rightTrim = rightAnswer.trim();
+    let userTrimLcase = userTrim.toLowerCase();
+    let rightTrimLcase = rightTrim.toLowerCase();
+    try {
+      if (userTrimLcase.length > 0 && userTrimLcase === rightTrimLcase) {
+        setCorrect(true);
+        const correctInput = document.getElementById(id);
+        const attr = document.createAttribute("class");
+        attr.value = "correct-input";
+        correctInput.setAttributeNode(attr);
+        correctInput.ariaDisabled = true;
+        correctInput.disabled = true;
+        increment();
+      } else {
+        setCorrect(false);
+        const correctInput = document.getElementById(id);
+        const attr = document.createAttribute("class");
+        attr.value = "incorrect-input";
+        correctInput.setAttributeNode(attr);
+      }
+    } catch (error) {
+      console.log(error);
     }
 
     // // array.forEach((element) => {
@@ -70,34 +79,57 @@ const Home = () => {
 
   const onInputChange = async (e) => {
     e.preventDefault();
-    setQuestionAnswer(() => ({
-      ...questionAnswer,
-      id: e.target.id,
-      rightAnswer: e.target.name,
-      userAnswer: e.target.value,
-    }));
-    // necessary other won't fire in sequence
-    await update();
+    try {
+      setQuestionAnswer(() => ({
+        ...questionAnswer,
+        id: e.target.id,
+        rightAnswer: e.target.name,
+        userAnswer: e.target.value,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+
+    // if using buuton disable
+    // await update();
   };
 
   return (
     <div className="row mt-4 text-center">
       <div className="col-sm-10 col-offset-3 mx-auto shadow p-5">
         <Row className="justify-content-center">
-          <Col className="fs-2 text" xs={6} sm={6} m={6} lg={5} xl={5}></Col>
+          {/* <Col className="fs-2 text" xs={6} sm={6} m={6} lg={5} xl={5}></Col> */}
           <Col className="fs-2 text" xs={6} sm={6} m={6} lg={5} xl={5}>
-            {counter > 0 ? (
-              <Badge pill bg="info">
-                {counter} out of {translations.length}
-              </Badge>
-            ) : (
-              <Badge pill bg="info">
-                Let's go!
-              </Badge>
-            )}
+            {(() => {
+              if (counter > 0 && counter <= 2) {
+                return (
+                  <Badge pill bg="danger" className="fs-2">
+                    {counter} out of {translations.length}
+                  </Badge>
+                );
+              } else if (counter > 2 && counter < translations.length) {
+                return (
+                  <Badge pill bg="warning" className="fs-2">
+                    {counter} out of {translations.length}
+                  </Badge>
+                );
+              } else if (counter === translations.length) {
+                return (
+                  <Badge pill bg="success" className="fs-2">
+                    {counter} out of {translations.length}
+                  </Badge>
+                );
+              } else {
+                return (
+                  <Badge pill bg="danger" className="fs-2">
+                    Let's go!
+                  </Badge>
+                );
+              }
+            })()}
           </Col>
         </Row>
-        <Row className="justify-content-center">
+        <Row className="justify-content-center mt-2">
           <Col className="fs-2 text" xs={6} sm={6} m={6} lg={5} xl={5}>
             <h2>English</h2>
           </Col>
@@ -110,6 +142,7 @@ const Home = () => {
           translations={translations}
           isDisable={isDisabled}
           onInputChange={onInputChange}
+          update={update}
         />
       </div>
     </div>
