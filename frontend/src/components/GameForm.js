@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import "bootstrap/dist/css/bootstrap.min.css";
 import InputGroup from "react-bootstrap/InputGroup";
 
-const GameForm = ({ translations, isDisabled, onInputChange }) => {
+const GameForm = ({ translations, isDisabled, update, onInputChange }) => {
   const [reset, setReset] = useState();
 
   useEffect(() => {
@@ -18,6 +18,8 @@ const GameForm = ({ translations, isDisabled, onInputChange }) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    await update();
+
     // setReset({});
   };
 
@@ -27,20 +29,20 @@ const GameForm = ({ translations, isDisabled, onInputChange }) => {
         <Row
           key={translation.id}
           // id={translation.id}
-          className="justify-content-center"
+          className="justify-content-center mt-2"
         >
           <Col sm={12} m={12} lg={10} className="my-1">
             <InputGroup size="lg">
               <InputGroup.Text
-                className="bg-info bg-gradient fs-2 text justify-content-center"
+                className="bg-info  bg-gradient fs-3 text justify-content-center"
                 aria-describedby="English word"
               >
                 {translation.english}
               </InputGroup.Text>
               <Form.Control
-                autoFocus
+                autoFocus={true}
                 disabled={isDisabled}
-                className="fs-2 text-center"
+                className="fs-3 text-center"
                 id={translation.id}
                 name={translation.finnish}
                 placeholder="Finnish word"
@@ -57,10 +59,22 @@ const GameForm = ({ translations, isDisabled, onInputChange }) => {
           </Col>
         </Row>
       ))}
-      <Row>
-        <Col className="my-auto">
-          <Button size="lg" type="button" onClick={(e) => handleReset(e)}>
-            Reset
+      <Row className="justify-content-center">
+        <Col xs={8} sm={8} m={8} lg={6} className="my-auto">
+          <div className="d-grid gap-2">
+            <Button
+              className="mt-4 fs-2"
+              size="lg"
+              type="button"
+              onClick={(e) => handleReset(e)}
+            >
+              Reset
+            </Button>
+          </div>
+        </Col>
+        <Col xs="auto" className="my-1">
+          <Button type="submit" onClick={handleSubmit} hidden>
+            Answer
           </Button>
         </Col>
       </Row>
