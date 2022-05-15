@@ -57,15 +57,15 @@ const Translations = () => {
   // Insert Translation
   const submitTranslation = async (e) => {
     await e.preventDefault();
+    // clear form fields
     await e.target.reset();
-
     await axios.post("/api/add", translation, {
       headers: {
         "content-type": "application/json",
       },
     });
     await getTranslations();
-    // clear form fields
+
     setTranslation({ english: "", finnish: "", tag_id: "" });
     // setShow(true);
   };
@@ -81,10 +81,10 @@ const Translations = () => {
         window.alert("Oops something went wrong");
       });
   };
-  // render(console.log(translation.tag_id));
+
   return (
     <section>
-      <Toast
+      {/* <Toast
         onClose={() => setShow(false)}
         show={show}
         delay={3000}
@@ -95,7 +95,7 @@ const Translations = () => {
           <strong className="me-auto">Success!</strong>
         </Toast.Header>
         <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
-      </Toast>
+      </Toast> */}
       <Container>
         <Row
           className="justify-content-center  d-flex
