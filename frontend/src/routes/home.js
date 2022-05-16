@@ -38,43 +38,36 @@ const Home = () => {
     userAnswer: "",
   });
   const { id, rightAnswer, userAnswer } = questionAnswer;
+
   useEffect(() => {
-    console.log("useEffect", correct);
-  }, [correct, isDisabled]);
-  console.log("render", correct, isDisabled);
+    console.log("correct value", correct);
+    console.log("userAnswer", userAnswer);
+    console.log("rightAnswer", rightAnswer);
+  }, [correct, counter, userAnswer, rightAnswer]);
+  console.log("render", correct, userAnswer, rightAnswer, isDisabled);
 
-  const update = async (e) => {
-    ///trim out spaces and convert both to saame case for comparison
-    let userTrim = userAnswer.trim();
-    let rightTrim = rightAnswer.trim();
-    let userTrimLcase = userTrim.toLowerCase();
-    let rightTrimLcase = rightTrim.toLowerCase();
-    try {
-      if (userTrimLcase.length > 0 && userTrimLcase === rightTrimLcase) {
-        setCorrect(true);
-        const correctInput = document.getElementById(id);
-        const attr = document.createAttribute("class");
-        attr.value = "correct-input";
-        correctInput.setAttributeNode(attr);
-        correctInput.ariaDisabled = true;
-        correctInput.disabled = true;
-        increment();
-      } else {
-        setCorrect(false);
-        const correctInput = document.getElementById(id);
-        const attr = document.createAttribute("class");
-        attr.value = "incorrect-input";
-        correctInput.setAttributeNode(attr);
-      }
-    } catch (error) {
-      console.log(error);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // setReset({});
+  };
+
+  const updater = async (e) => {
+    if (userAnswer.length > 0 && rightAnswer === userAnswer) {
+      const correctInput = document.getElementById(id);
+      const attr = document.createAttribute("class");
+      attr.value = "correct-input";
+      correctInput.setAttributeNode(attr);
+      correctInput.ariaDisabled = true;
+      correctInput.disabled = true;
+      increment();
     }
-
-    // // array.forEach((element) => {
-    // //   if (correct === true) {
-
-    // //   }
-    // });
+    // else {
+    //   const inCorrectInput = document.getElementById(id);
+    //   const attr2 = document.createAttribute("class");
+    //   attr2.value = "incorrect-input";
+    //   inCorrectInput.setAttributeNode(attr2);
+    // }
   };
 
   const onInputChange = async (e) => {
@@ -86,12 +79,11 @@ const Home = () => {
         rightAnswer: e.target.name,
         userAnswer: e.target.value,
       }));
+      await updater(e);
+      await handleSubmit(e);
     } catch (error) {
       console.log(error);
     }
-
-    // if using buuton disable
-    // await update();
   };
 
   return (
@@ -142,7 +134,7 @@ const Home = () => {
           translations={translations}
           isDisable={isDisabled}
           onInputChange={onInputChange}
-          update={update}
+          handleSubmit={handleSubmit}
         />
       </div>
     </div>
