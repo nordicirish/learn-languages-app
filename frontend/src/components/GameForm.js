@@ -7,7 +7,13 @@ import Col from "react-bootstrap/Col";
 import "bootstrap/dist/css/bootstrap.min.css";
 import InputGroup from "react-bootstrap/InputGroup";
 
-const GameForm = ({ translations, isDisabled, update, onInputChange }) => {
+const GameForm = ({
+  translations,
+  isDisabled,
+  update,
+  handleSubmit,
+  onInputChange,
+}) => {
   const [reset, setReset] = useState();
 
   useEffect(() => {
@@ -15,12 +21,6 @@ const GameForm = ({ translations, isDisabled, update, onInputChange }) => {
   }, []);
   const handleReset = async (e) => {
     window.location.reload(false);
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await update();
-
-    // setReset({});
   };
 
   return (
@@ -73,9 +73,9 @@ const GameForm = ({ translations, isDisabled, update, onInputChange }) => {
           </div>
         </Col>
         <Col xs="auto" className="my-1">
-          <Button type="submit" onClick={handleSubmit} hidden>
+          {/* <Button type="submit" onClick={handleSubmit} hidden>
             Answer
-          </Button>
+          </Button> */}
         </Col>
       </Row>
     </Form>
