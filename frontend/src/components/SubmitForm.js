@@ -3,14 +3,14 @@ import Button from "react-bootstrap/Button";
 // props passed from translations.js
 const SubmitForm = ({
   tags,
-  translation,
+  newTranslation,
   submitTranslation,
-  setTranslation,
+  setNewTranslation,
 }) => {
   //  Object Destructuring
-  const { english, finnish, tag_id } = translation;
+  const { english, finnish, tag_id } = newTranslation;
   const onInputChange = (e) => {
-    setTranslation({ ...translation, [e.target.id]: e.target.value });
+    setNewTranslation({ ...newTranslation, [e.target.id]: e.target.value });
   };
   return (
     <div className="box p-3 mb-3 mt-0" style={{ border: "1px solid #d0d0d0" }}>
