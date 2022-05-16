@@ -15,12 +15,17 @@ const Translations = () => {
   const [translations, setTranslations] = useState([]);
   const [show, setShow] = useState(false);
 
-  const [translation, setTranslation] = useState({
+  // const [translation, setTranslation] = useState({
+  //   english: "",
+  //   finnish: "",
+  //   tag_id: "",
+  // });
+
+  const [newTranslation, setNewTranslation] = useState({
     english: "",
     finnish: "",
     tag_id: "",
   });
-
   const [tags, setTags] = useState([]);
 
   // On Page load display all records
@@ -31,8 +36,8 @@ const Translations = () => {
         console.log("promise fulfilled");
         setTranslations(response.data);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error) => {
+        console.log(error);
       });
   };
   useEffect(() => {
@@ -46,8 +51,8 @@ const Translations = () => {
         console.log("promise fulfilled");
         setTags(response.data);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error) => {
+        console.log(error);
       });
   };
   useEffect(() => {
@@ -55,19 +60,49 @@ const Translations = () => {
   }, []);
 
   // Insert Translation
+
   const submitTranslation = async (e) => {
     await e.preventDefault();
-    // clear form fields
-    await e.target.reset();
-    await axios.post("/api/add", translation, {
-      headers: {
-        "content-type": "application/json",
-      },
-    });
-    await getTranslations();
-
-    setTranslation({ english: "", finnish: "", tag_id: "" });
-    // setShow(true);
+    try {
+      if (
+        translations.find(
+          (translation) => translation.english == newTranslation.english,
+          true
+        )
+      ) {
+        window.alert(
+          "Sorry " +
+            newTranslation.english +
+            " already exists. Please use a different word"
+        );
+        return;
+      }
+      if (
+        translations.find(
+          (translation) => translation.english == newTranslation.english,
+          true
+        )
+      ) {
+        window.alert(
+          "Sorry " +
+            newTranslation.finnish +
+            " already exists. Please enter a different word"
+        );
+        return;
+      }
+      // clear form fields
+      await e.target.reset();
+      await axios.post("/api/add", newTranslation, {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      await getTranslations();
+      setNewTranslation({ english: "", finnish: "", tag_id: "" });
+      // setShow(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Delete Translation
@@ -107,9 +142,9 @@ const Translations = () => {
           <Col xs="9" sm="8" md="6" lg="4" xl="4">
             <SubmitForm
               tags={tags}
-              translation={translation}
+              newTranslation={newTranslation}
               submitTranslation={submitTranslation}
-              setTranslation={setTranslation}
+              setNewTranslation={setNewTranslation}
             />
           </Col>
           <Col md="12" lg="8" xl="8">
