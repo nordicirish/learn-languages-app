@@ -7,10 +7,7 @@ import React, {
 } from "react";
 import * as ReactDOM from "react-dom";
 import axios from "axios";
-import Badge from "react-bootstrap/Badge";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { Alert } from "react-bootstrap";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import GameForm from "../components/GameForm";
 
@@ -93,9 +90,9 @@ const Home = () => {
   const updater = async (e) => {
     if (userAnswer.length > 0 && rightAnswer === userAnswer) {
       const correctInput = document.getElementById(id);
-      const attr = document.createAttribute("class");
-      attr.value = "correct-input";
-      correctInput.setAttributeNode(attr);
+      // const attr = document.createAttribute("class");
+      // attr.value = "correct-input";
+      // correctInput.setAttributeNode(attr);
       correctInput.ariaDisabled = true;
       correctInput.disabled = true;
       toggle();
@@ -122,69 +119,13 @@ const Home = () => {
   };
 
   return (
-    <div className="row mt-4 text-center">
-      <div className="col-sm-10 col-offset-3 mx-auto shadow p-5">
-        <Row className="justify-content-start">
-          <Col className="fs-2 mb-2 text " xs={10} sm={10} m={10} lg={10}>
-            {(() => {
-              if (counter > 0 && counter <= 2) {
-                return (
-                  <Badge pill bg="danger" className="fs-2">
-                    {counter} out of {translations.length}
-                  </Badge>
-                );
-              } else if (counter > 2 && counter < translations.length) {
-                return (
-                  <Badge pill bg="warning" className="fs-2">
-                    {counter} out of {translations.length}
-                  </Badge>
-                );
-              } else if (counter === translations.length) {
-                return (
-                  <Badge pill bg="success" className="fs-2">
-                    {counter} out of {translations.length}
-                  </Badge>
-                );
-              } else {
-                return (
-                  <Badge pill bg="danger" className="fs-2">
-                    Let's go!
-                  </Badge>
-                );
-              }
-            })()}
-          </Col>
-        </Row>
-        <Row className="justify-content-center mt-2">
-          <Col className="fs-2 text" xs={3} sm={3} m={3} lg={3} xl={3}>
-            <h2>English</h2>
-
-            {/* //test  */}
-            {showField === true && <p>Name: {rightAnswer}</p>}
-          </Col>
-          <Col className="fs-2 text" xs={7} sm={7} m={7} lg={7} xl={7}>
-            <h2>Finnish</h2>
-          </Col>
-        </Row>
-
-        <GameForm
-          isDisable={isDisabled}
-          onInputChange={onInputChange}
-          handleSubmit={handleSubmit}
-          userAnswer={userAnswer}
-          setUserAnswer={setUserAnswer}
-          rightAnswer={rightAnswer}
-          setRightAnswer={setRightAnswer}
-          showName={showField}
-          id={id}
-          isCorrect={isCorrect}
-          buttonId={buttonId}
-          setButtonId={setButtonId}
-          setId={setId}
-          translations={translations}
-        />
-      </div>
-    </div>
+    <GameForm
+      isDisabled={isDisabled}
+      onInputChange={onInputChange}
+      counter={counter}
+      handleSubmit={handleSubmit}
+      translations={translations}
+    />
   );
 };
 
