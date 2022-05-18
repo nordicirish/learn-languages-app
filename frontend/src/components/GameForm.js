@@ -91,7 +91,7 @@ const GameForm = ({
                   <Form.Control
                     autoFocus={true}
                     spellCheck="false"
-                    disabled={isDisabled}
+                    // disabled={isDisabled}
                     //   change input appearance if user answer is correct
                     className={
                       translation.isCorrect
@@ -106,6 +106,7 @@ const GameForm = ({
                     onChange={(e) => {
                       onInputChange(e);
                     }}
+                    disabled={translation.isCorrect ? true : false}
                     aria-label="Finnish word"
                     pattern="[a-zA-ZäöåÄÖÅ]*"
                     title="The word should have only letters"

@@ -94,7 +94,7 @@ const Home = () => {
       // attr.value = "correct-input";
       // correctInput.setAttributeNode(attr);
       correctInput.ariaDisabled = true;
-      correctInput.disabled = true;
+      // correctInput.disabled = true;
       toggle();
       increment();
       //   // } else {
