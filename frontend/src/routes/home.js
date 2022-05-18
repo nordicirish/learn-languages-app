@@ -16,7 +16,7 @@ const Home = () => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [userAnswer, setUserAnswer] = useState("");
   const [rightAnswer, setRightAnswer] = useState("");
-  const [showField, setShowField] = useState(false);
+  // const [showField, setShowField] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [id, setId] = useState("");
   const [buttonId, setButtonId] = useState(null);
@@ -61,12 +61,15 @@ const Home = () => {
   useEffect(() => {
     console.log();
   }, [counter, translations, userAnswer, rightAnswer]);
-  console.log("render", translations);
+  console.log("render", userAnswer);
   //  console.log("render", userAnswer, rightAnswer, isDisabled);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    updater(e);
+    if (rightAnswer === userAnswer) {
+      await toggle();
+      await increment();
+    }
 
     // setReset({});
   };
@@ -87,21 +90,18 @@ const Home = () => {
     setTranslations(copyArray);
   };
 
-  const updater = async (e) => {
-    if (userAnswer.length > 0 && rightAnswer === userAnswer) {
-      const correctInput = document.getElementById(id);
-      // const attr = document.createAttribute("class");
-      // attr.value = "correct-input";
-      // correctInput.setAttributeNode(attr);
-      correctInput.ariaDisabled = true;
-      // correctInput.disabled = true;
-      toggle();
-      increment();
-      //   // } else {
-      //   //   const inCorrectInput = document.getElementById(id);
-      //   //   const attr2 = document.createAttribute("class");
-      //   //   attr2.value = "incorrect-input";
-      //   //   inCorrectInput.setAttributeNode(attr2);
+  const handleFormat = () => {
+    try {
+      let copyRightAnswer = rightAnswer;
+      let copyUserAnswer = userAnswer;
+      copyUserAnswer.trim();
+      copyUserAnswer.toLocaleLowerCase();
+      setUserAnswer(copyUserAnswer);
+      copyRightAnswer.trim();
+      copyRightAnswer.toLocaleLowerCase();
+      setRightAnswer(copyUserAnswer);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -111,10 +111,8 @@ const Home = () => {
     setButtonId(id);
     setUserAnswer(e.target.value);
     setRightAnswer(e.target.name);
-
-    try {
-    } catch (error) {
-      console.log(error);
+    if (userAnswer.length > 0) {
+      await handleFormat();
     }
   };
 
@@ -125,6 +123,7 @@ const Home = () => {
       counter={counter}
       handleSubmit={handleSubmit}
       translations={translations}
+      userAnswer={userAnswer}
     />
   );
 };
