@@ -1,4 +1,11 @@
-import React, { useState, useEffect, render, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  render,
+  useCallback,
+  useMemo,
+} from "react";
+import * as ReactDOM from "react-dom";
 import axios from "axios";
 import Badge from "react-bootstrap/Badge";
 import Row from "react-bootstrap/Row";
@@ -8,12 +15,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import GameForm from "../components/GameForm";
 
 const Home = () => {
-  const [translations, setTranslations] = useState([]);
   const [counter, setCounter] = useState(0);
-  const [correct, setCorrect] = useState(false);
-  const [show, setShow] = useState(true);
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [userAnswer, setUserAnswer] = useState("");
+  const [rightAnswer, setRightAnswer] = useState("");
+  const [showField, setShowField] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [currentId, setCurrentId] = useState(null);
+  const [id, setId] = useState("");
+  const [buttonId, setButtonId] = useState(null);
+  const [translations, setTranslations] = useState([
+    {
+      id: "",
+      english: "",
+      finnish: "",
+      tag_id: "",
+      isCorrect: false,
+    },
+  ]);
+
   // const [valid, setValid] = useState(false);
   const increment = () => setCounter((count) => count + 1);
 
@@ -22,34 +41,53 @@ const Home = () => {
       .get("/api/all")
       .then((response) => {
         console.log("promise fulfilled");
-        setTranslations(response.data);
+        const updatedResponse = response.data;
+        // add isCorrect property for reference in state changes
+        const updatedData = updatedResponse.map((translation) => ({
+          ...translation,
+          isCorrect: false,
+        }));
+        // console.log(...updatedData);
+        setTranslations([...updatedData]);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   useEffect(() => {
     getTranslations();
   }, []);
 
-  const [questionAnswer, setQuestionAnswer] = useState({
-    id: null,
-    rightAnswer: "",
-    userAnswer: "",
-  });
-  const { id, rightAnswer, userAnswer } = questionAnswer;
+  useEffect(() => {});
 
   useEffect(() => {
-    console.log("correct value", correct);
-    console.log("userAnswer", userAnswer);
-    console.log("rightAnswer", rightAnswer);
-  }, [correct, counter, userAnswer, rightAnswer]);
-  console.log("render", correct, userAnswer, rightAnswer, isDisabled);
+    console.log();
+  }, [counter, translations, userAnswer, rightAnswer]);
+  console.log("render", translations);
+  //  console.log("render", userAnswer, rightAnswer, isDisabled);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    updater(e);
 
     // setReset({});
+  };
+  const toggle = (e) => {
+    console.log("id is" + id);
+    // id is increment by 1 in the GameForm Component
+    // so need to subtract 1 to synchronise with array index values
+    let adjustedIndex = Number(id) - 1;
+    // make shallow copies of array and selected element to avoid state mutation
+    let copyArray = [...translations];
+    let copyTranslation = { ...copyArray[adjustedIndex] };
+    console.log("temp element " + copyTranslation);
+    // switch the boolean value of the element
+    copyTranslation.isCorrect = !isCorrect;
+    // update the element in the copied array
+    copyArray[adjustedIndex] = copyTranslation;
+    // Use the copy to array set the new isCorrect state
+    setTranslations(copyArray);
   };
 
   const updater = async (e) => {
@@ -60,27 +98,24 @@ const Home = () => {
       correctInput.setAttributeNode(attr);
       correctInput.ariaDisabled = true;
       correctInput.disabled = true;
+      toggle();
       increment();
+      //   // } else {
+      //   //   const inCorrectInput = document.getElementById(id);
+      //   //   const attr2 = document.createAttribute("class");
+      //   //   attr2.value = "incorrect-input";
+      //   //   inCorrectInput.setAttributeNode(attr2);
     }
-    // else {
-    //   const inCorrectInput = document.getElementById(id);
-    //   const attr2 = document.createAttribute("class");
-    //   attr2.value = "incorrect-input";
-    //   inCorrectInput.setAttributeNode(attr2);
-    // }
   };
 
   const onInputChange = async (e) => {
     e.preventDefault();
+    setId(e.target.id);
+    setButtonId(id);
+    setUserAnswer(e.target.value);
+    setRightAnswer(e.target.name);
+
     try {
-      setQuestionAnswer(() => ({
-        ...questionAnswer,
-        id: e.target.id,
-        rightAnswer: e.target.name,
-        userAnswer: e.target.value,
-      }));
-      await updater(e);
-      await handleSubmit(e);
     } catch (error) {
       console.log(error);
     }
@@ -89,9 +124,8 @@ const Home = () => {
   return (
     <div className="row mt-4 text-center">
       <div className="col-sm-10 col-offset-3 mx-auto shadow p-5">
-        <Row className="justify-content-center">
-          {/* <Col className="fs-2 text" xs={6} sm={6} m={6} lg={5} xl={5}></Col> */}
-          <Col className="fs-2 text" xs={6} sm={6} m={6} lg={5} xl={5}>
+        <Row className="justify-content-start">
+          <Col className="fs-2 mb-2 text " xs={10} sm={10} m={10} lg={10}>
             {(() => {
               if (counter > 0 && counter <= 2) {
                 return (
@@ -122,19 +156,32 @@ const Home = () => {
           </Col>
         </Row>
         <Row className="justify-content-center mt-2">
-          <Col className="fs-2 text" xs={6} sm={6} m={6} lg={5} xl={5}>
+          <Col className="fs-2 text" xs={3} sm={3} m={3} lg={3} xl={3}>
             <h2>English</h2>
+
+            {/* //test  */}
+            {showField === true && <p>Name: {rightAnswer}</p>}
           </Col>
-          <Col className="fs-2 text" xs={6} sm={6} m={6} lg={5} xl={5}>
+          <Col className="fs-2 text" xs={7} sm={7} m={7} lg={7} xl={7}>
             <h2>Finnish</h2>
           </Col>
         </Row>
 
         <GameForm
-          translations={translations}
           isDisable={isDisabled}
           onInputChange={onInputChange}
           handleSubmit={handleSubmit}
+          userAnswer={userAnswer}
+          setUserAnswer={setUserAnswer}
+          rightAnswer={rightAnswer}
+          setRightAnswer={setRightAnswer}
+          showName={showField}
+          id={id}
+          isCorrect={isCorrect}
+          buttonId={buttonId}
+          setButtonId={setButtonId}
+          setId={setId}
+          translations={translations}
         />
       </div>
     </div>
