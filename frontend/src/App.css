@@ -105,6 +105,13 @@ tr {
   width: 50%;
   min-width: 50%;
 }
+
+.rounded-pill {
+  
+  width: 16rem!important;
+  min-width:16rem!important;
+  height: 100%!important;
+}
 .correct-input{
   background-color: #d1e7dd!important;
   border-color: #badbcc!important;
@@ -132,3 +139,4 @@ tr {
   padding: .5rem 1rem !important;
   max-width: 50%   
 }
+
