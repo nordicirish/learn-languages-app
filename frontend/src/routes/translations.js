@@ -1,34 +1,28 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Toast from "react-bootstrap/Toast";
 import Container from "react-bootstrap/Container";
 import AdminTable from "../components/AdminTable";
 import SubmitForm from "../components/SubmitForm";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 // "proxy": "http://localhost:8080" in package.json allows short urls
 
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 const Translations = () => {
   const [translations, setTranslations] = useState([]);
-  const [show, setShow] = useState(false);
-
-  // const [translation, setTranslation] = useState({
-  //   english: "",
-  //   finnish: "",
-  //   tag_id: "",
-  // });
-
+  // used to display the delete modal form
+  // const [show, setShow] = useState(false);
+  // newTranslation object used by SubmitForm component to post a new item
+  // initialise newTranslation state
   const [newTranslation, setNewTranslation] = useState({
     english: "",
     finnish: "",
     tag_id: "",
   });
+  // initialise the state of the tags array
   const [tags, setTags] = useState([]);
 
-  // On Page load display all records
+  // On Page load fetch all records via the api
   const getTranslations = () => {
     axios
       .get("/api/all")
@@ -40,10 +34,11 @@ const Translations = () => {
         console.log(error);
       });
   };
+  // useEffect - getTranslations runs once on page load
   useEffect(() => {
     getTranslations();
   }, []);
-
+  // fetch all tags via the api
   const getTags = () => {
     axios
       .get("/api/Tags")
@@ -60,9 +55,10 @@ const Translations = () => {
   }, []);
 
   // Insert Translation
-
   const submitTranslation = async (e) => {
     await e.preventDefault();
+    // check first if the submiited values already exists in the array
+    // database is set to accept only unique values
     try {
       if (
         translations.find(
@@ -92,20 +88,23 @@ const Translations = () => {
       }
       // clear form fields
       await e.target.reset();
+      // api posts the newTranslation object to the database
       await axios.post("/api/add", newTranslation, {
         headers: {
           "content-type": "application/json",
         },
       });
+      // fetches the updated data from the database
+      // may change to updating the array instead in futire releases
       await getTranslations();
       setNewTranslation({ english: "", finnish: "", tag_id: "" });
-      // setShow(true);
     } catch (error) {
       console.log(error);
     }
   };
 
   // Delete Translation
+  // Returns updated data to confirm
   const deleteTranslation = (id) => {
     axios
       .delete(`/api/delete/${id}`)
@@ -119,42 +118,17 @@ const Translations = () => {
 
   return (
     <section>
-      {/* <Toast
-        onClose={() => setShow(false)}
-        show={show}
-        delay={3000}
-        autohide
-        bg="success"
-      >
-        <Toast.Header>
-          <strong className="me-auto">Success!</strong>
-        </Toast.Header>
-        <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
-      </Toast> */}
       <Container>
-        <Row
-          className="justify-content-center  d-flex
-          flex-row-reverse"
-          xs="12"
-          md="12"
-          lg="12"
-        >
-          <Col xs="9" sm="8" md="6" lg="4" xl="4">
-            <SubmitForm
-              tags={tags}
-              newTranslation={newTranslation}
-              submitTranslation={submitTranslation}
-              setNewTranslation={setNewTranslation}
-            />
-          </Col>
-          <Col md="12" lg="8" xl="8">
-            <AdminTable
-              tags={tags}
-              translations={translations}
-              deleteTranslation={deleteTranslation}
-            />
-          </Col>
-        </Row>
+        {/* props passed to the admin table */}
+        <AdminTable
+          tags={tags}
+          translations={translations}
+          deleteTranslation={deleteTranslation}
+          SubmitForm={SubmitForm}
+          newTranslation={newTranslation}
+          submitTranslation={submitTranslation}
+          setNewTranslation={setNewTranslation}
+        />
       </Container>
     </section>
   );
