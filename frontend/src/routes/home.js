@@ -1,36 +1,24 @@
-import React, {
-  useState,
-  useEffect,
-  render,
-  useCallback,
-  useMemo,
-} from "react";
-import * as ReactDOM from "react-dom";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-import "bootstrap/dist/css/bootstrap.min.css";
+// GameForm component renders the game
 import GameForm from "../components/GameForm";
 
 const Home = () => {
   const [counter, setCounter] = useState(0);
-  const [isCorrect, setIsCorrect] = useState(false);
+
+  // used to record if the user input is correct
+  // for toggling the display properties of GameForm elements
+  const [isCorrect, setIscorrect] = useState(false);
+  // hold the values of the selected GameForm word pair
   const [userAnswer, setUserAnswer] = useState("");
   const [rightAnswer, setRightAnswer] = useState("");
-  // const [showField, setShowField] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
+  // used to capture the current translations array index value
   const [id, setId] = useState("");
-  const [buttonId, setButtonId] = useState(null);
-  const [translations, setTranslations] = useState([
-    {
-      id: "",
-      english: "",
-      finnish: "",
-      tag_id: "",
-      isCorrect: false,
-    },
-  ]);
+  // not yet implemented assigns an id
+  // const [buttonId, setButtonId] = useState(null);
+  const [translations, setTranslations] = useState([]);
 
-  // const [valid, setValid] = useState(false);
+  // increments the state of the user score
   const increment = () => setCounter((count) => count + 1);
 
   const getTranslations = () => {
@@ -40,6 +28,7 @@ const Home = () => {
         console.log("promise fulfilled");
         const updatedResponse = response.data;
         // add isCorrect property for reference in state changes
+        // initialise as false
         const updatedData = updatedResponse.map((translation) => ({
           ...translation,
           isCorrect: false,
@@ -51,31 +40,57 @@ const Home = () => {
         console.log(error);
       });
   };
-
+  // useEffect runs getTranslations once on page load
   useEffect(() => {
     getTranslations();
   }, []);
 
-  useEffect(() => {});
-
+  // used to render console.log
   useEffect(() => {
-    console.log();
+    console.log(" userAnswer is " + userAnswer);
+    console.log(" rightAnswer is " + rightAnswer);
   }, [counter, translations, userAnswer, rightAnswer]);
-  console.log("render", userAnswer);
+  console.log("render", userAnswer, rightAnswer);
   //  console.log("render", userAnswer, rightAnswer, isDisabled);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (rightAnswer === userAnswer) {
-      await toggle();
-      await increment();
+    // checks if user userAnswer is correct
+    // before updating state
+    // prevents empty values being passed
+    try {
+      if (userAnswer.length > 0 && rightAnswer === userAnswer) {
+        await handleFormat(e);
+        await toggle();
+        await increment();
+        // reset answer values
+        setUserAnswer("");
+        setRightAnswer("");
+      } else {
+        window.alert("Im sorry that's not correct");
+      }
+    } catch (error) {
+      console.log(error);
     }
-
-    // setReset({});
   };
+
+  const onInputChange = async (e) => {
+    // stops a page reload
+    e.preventDefault();
+
+    // sets id state to the current array row index
+    setId(e.target.id);
+
+    // possible future implementation
+    // setButtonId(id);
+    // sets the word pair to the current form row values
+    setUserAnswer(e.target.value);
+    setRightAnswer(e.target.name);
+  };
+  // updates the state of 1 row referenced by id
   const toggle = (e) => {
     console.log("id is" + id);
-    // id is increment by 1 in the GameForm Component
+    // id is incremented by 1 in the GameForm Component
     // so need to subtract 1 to synchronise with array index values
     let adjustedIndex = Number(id) - 1;
     // make shallow copies of array and selected element to avoid state mutation
@@ -90,10 +105,14 @@ const Home = () => {
     setTranslations(copyArray);
   };
 
-  const handleFormat = () => {
+  const handleFormat = (e) => {
+    // copies the strings to avoid mutation then formats them and
+    // uses setState to update their original states
     try {
       let copyRightAnswer = rightAnswer;
       let copyUserAnswer = userAnswer;
+      // trim and toLocaleLowerCase applied to strings
+      // compared strings set to the same case (lowercase) and remove spaces
       copyUserAnswer.trim();
       copyUserAnswer.toLocaleLowerCase();
       setUserAnswer(copyUserAnswer);
@@ -105,25 +124,20 @@ const Home = () => {
     }
   };
 
-  const onInputChange = async (e) => {
-    e.preventDefault();
-    setId(e.target.id);
-    setButtonId(id);
-    setUserAnswer(e.target.value);
-    setRightAnswer(e.target.name);
-    if (userAnswer.length > 0) {
-      await handleFormat();
-    }
+  // false argument reloads page from local memory
+  const handleReset = async (e) => {
+    window.location.reload(false);
   };
 
   return (
     <GameForm
-      isDisabled={isDisabled}
+      // props passed to GameForm
       onInputChange={onInputChange}
       counter={counter}
       handleSubmit={handleSubmit}
       translations={translations}
       userAnswer={userAnswer}
+      handleReset={handleReset}
     />
   );
 };
