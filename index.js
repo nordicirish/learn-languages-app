@@ -8,9 +8,10 @@ const database = require("./database/crudrepository.js");
 require("dotenv").config();
 // post won't work without express.json
 app.use(express.json());
-
+// static files served from the react frontend buidl folder
 app.use(express.static(path.resolve(__dirname, "./frontend/build")));
-
+// Cross-origin resource sharing (CORS)
+// allows the front end domain to access the backend domain
 app.use(cors());
 
 // Handle GET requests to /api route
@@ -31,6 +32,7 @@ app.get("/api/tags", async (req, res) => {
     res.status(500).end();
   }
 });
+
 app.get("/api/sort-by-tag", async (req, res) => {
   try {
     let result = await database.sortByTag();
@@ -39,6 +41,7 @@ app.get("/api/sort-by-tag", async (req, res) => {
     res.status(500).end();
   }
 });
+// not yet implemented in the frontend
 app.get("/api/sort-by-tag-desc", async (req, res) => {
   try {
     let result = await database.sortByTagDesc();
@@ -47,7 +50,7 @@ app.get("/api/sort-by-tag-desc", async (req, res) => {
     res.status(500).end();
   }
 });
-
+// api post request to add an item to the database
 app.post("/api/add", async (req, res) => {
   newTranslation = req.body;
   try {
@@ -60,7 +63,7 @@ app.post("/api/add", async (req, res) => {
     res.status(500).end();
   }
 });
-
+// api get request to retreive a a specified item
 app.get("/api/find/:id([0-9]+)", async (req, res) => {
   id = req.params.id;
   console.log(id);
@@ -73,6 +76,7 @@ app.get("/api/find/:id([0-9]+)", async (req, res) => {
   }
 });
 
+// api delete request to delete a a specified item
 app.delete("/api/delete/:id([0-9]+)", async (req, res) => {
   id = req.params.id;
   console.log(id);
@@ -86,10 +90,10 @@ app.delete("/api/delete/:id([0-9]+)", async (req, res) => {
     res.status(500).end();
   }
 });
-
+// api put request to change existing items values
 app.put("/api/update/:id([0-9]+)", async (req, res) => {
   translation = req.body;
-  // translation = { english: "squirrel", finnish: "orava", tag_id: "Animals" };
+
   id = req.params.id;
   try {
     let result = await database.putById(translation, id);
@@ -101,6 +105,7 @@ app.put("/api/update/:id([0-9]+)", async (req, res) => {
     res.status(500).end();
   }
 });
+// required for heroku
 // need to keep at the bottom so other api requests can run
 
 app.get("/*", (req, res) => {
