@@ -13,6 +13,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter basename="/">
       <Routes>
+        {/* url paths for pages and edit form */}
         <Route path="/" element={<App />}>
           <Route path="/" element={<Home />} />
           <Route path="/translations" element={<Translations />} />
