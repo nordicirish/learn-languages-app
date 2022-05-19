@@ -111,9 +111,12 @@ const GameForm = ({
                       aria-disabled={translation.isCorrect ? true : false}
                       // label to help assistive technology users
                       aria-label="Finnish word"
-                      // validate nordic letters
-                      // pattern="[a-zA-ZäöåÄÖÅ]*"
-                      title="Enter the Finnish word"
+                      //toggle title for adaptive technology users
+                      title={
+                        translation.isCorrect
+                          ? "Correct answer entered - input disabled"
+                          : "Enter the Finnish word"
+                      }
                       required
                     />
                   </InputGroup>
