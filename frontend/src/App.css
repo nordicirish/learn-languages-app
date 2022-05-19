@@ -89,7 +89,7 @@ label {
   background-color: #d1e7dd!important;
   border-color: #badbcc!important;
   border: 1px solid transparent!important;
-  border-radius: .3rem!important;
+  border-radius: 0 .3rem .3rem 0!important;
   font-size: 1.75rem!important;
   flex: 1 1 auto!important;
   color: #0f5132!important;
