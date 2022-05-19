@@ -56,14 +56,14 @@ const Home = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // checks if user userAnswer is correct
+    // checks if userAnswer is correct
     // before updating state
     // prevents empty values being passed
     try {
       if (userAnswer.length > 0 && rightAnswer === userAnswer) {
-        await handleFormat(e);
-        await toggleCorrect();
-        await increment();
+        // await handleFormat();
+        toggleCorrect();
+        increment();
         // reset answer values
         setUserAnswer("");
         setRightAnswer("");
@@ -84,8 +84,8 @@ const Home = () => {
       // possible future implementation
       // setButtonId(id);
       // sets the word pair to the current form row values
-      setUserAnswer(e.target.value);
-      setRightAnswer(e.target.name);
+      setUserAnswer(e.target.value.toLowerCase().trim());
+      setRightAnswer(e.target.name.toLowerCase().trim());
     } catch (error) {
       console.log(error);
     }
@@ -94,7 +94,7 @@ const Home = () => {
 
   // updates the state of 1 row referenced by id value
   // if a submitted answer is correct
-  const toggleCorrect = () => {
+  const toggleCorrect = (e) => {
     try {
       //  console.log("id is" + id);
       // id is incremented by 1 in the GameForm Component
@@ -118,7 +118,7 @@ const Home = () => {
   };
   // updates the state of 1 row referenced by id value
   // if a submitted answer is incorrect
-  const toggleIncorrect = () => {
+  const toggleIncorrect = (e) => {
     try {
       // id is incremented by 1 in the GameForm Component
       // so need to subtract 1 to synchronise with array index values
@@ -133,24 +133,6 @@ const Home = () => {
       copyArray[adjustedIndex] = copyTranslation;
       // Use the copy to array set the new isCorrect state
       setTranslations(copyArray);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleFormat = () => {
-    // copies the strings to avoid mutation then formats them and
-    // uses setState to update their original states
-    try {
-      let copyRightAnswer = rightAnswer;
-      let copyUserAnswer = userAnswer;
-      // trim and toLocaleLowerCase applied to strings
-      // compared strings set to the same case (lowercase) and remove spaces
-      copyUserAnswer.trim();
-      copyUserAnswer.toLocaleLowerCase();
-      setUserAnswer(copyUserAnswer);
-      copyRightAnswer.trim();
-      copyRightAnswer.toLocaleLowerCase();
-      setRightAnswer(copyUserAnswer);
     } catch (error) {
       console.log(error);
     }
