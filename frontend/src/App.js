@@ -12,6 +12,7 @@ function App() {
     <Container className="main-container">
       <div className="page-box">
         <NavBar />
+        {/* outlet is a holder for the routed content  */}
         <Outlet />
       </div>
     </Container>
