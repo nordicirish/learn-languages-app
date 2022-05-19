@@ -7,8 +7,10 @@ const SubmitForm = ({
   submitTranslation,
   setNewTranslation,
 }) => {
-  //  Object Destructuring
+  //  Object Destructuring for reference
   const { english, finnish, tag_id } = newTranslation;
+  // uses form input field attributes to store the translation word pairs and tag
+  // parses the stored field names and uses them create the new object values
   const onInputChange = (e) => {
     setNewTranslation({ ...newTranslation, [e.target.id]: e.target.value });
   };
