@@ -52,42 +52,13 @@ label {
 /* border-style: hidden!important */
 }
 
-/* .admin-table 
-
-thead,
-tr {
-  
-      border-radius: .8rem !important;
-  
-}  */
-/* .admin-table th {
-  text-align:center;
-  font-size: 120%;
-  
-  
-} */
-
-
-
-/* .thead-blue {
-  background-color: #050732!important;
-  border:#050732 !important;
-  color:#f8f9fa !important;
-} */
-
-
-
 .table-striped>tbody>tr:nth-of-type(odd)>* {
-    /* border-width: .2rem !important;
-      border-style: none  !important;
-      border-spacing:.2rem !important; */
+    
    --bs-table-accent-bg: rgb(13 110 253 / 11%)  !important;
   color: var(--bs-table-striped-color);
 }
 .table-striped>tbody>tr:nth-of-type(even)>* {
-  /* border-width: .2rem !important;
-  border-style: none  !important;
-  border-spacing:.2rem !important; */
+  
   --bs-table-accent-bg: rgb(13 110 253 / 5%) !important;
   color: var(--bs-table-striped-color);
 }
@@ -105,20 +76,20 @@ tr {
   width: 50%;
   min-width: 50%;
 }
-
+/* home page counter style - extends bootstrap style */
 .rounded-pill {
   
   width: 16rem!important;
   min-width:16rem!important;
   height: 100%!important;
 }
+
+/* used to visually inform the user that their answer is correct  */
 .correct-input{
   background-color: #d1e7dd!important;
   border-color: #badbcc!important;
   border: 1px solid transparent!important;
   border-radius: .3rem!important;
-  
-    /* margin-bottom: 0!important; */
   font-size: 1.75rem!important;
   flex: 1 1 auto!important;
   color: #0f5132!important;
@@ -127,6 +98,7 @@ tr {
   max-width:50%
   
 }
+/* not yet implemented - colour change if wrong answer input */
 .incorrect-input {
   background-color: #e4c9a3 !important;
   border-color: #e4c9a3 !important;
