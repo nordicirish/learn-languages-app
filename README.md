@@ -60,10 +60,10 @@ clone the code to your computer
 
 git clone https://github.com/nordicirish/learn-languages-app
 
-Install dependencies in the root of the project
-npm init
+#### 1 Install the backend
 
-<!-- cd frontend npm i ?? -->
+In the root of the project:
+npm install
 
 Rename env file to .env and fill your database credentials:
 
@@ -75,6 +75,14 @@ password =
 
 db =
 
+#### 2 Install React frontend
+
+cd frontend
+
+npm install
+npm run build
+npm run start
+
 <!-- cd .. nodemon index.js -->
-<!-- cd frontend npm run start  -->
+
 <!-- access http://localhost:8080 -->
