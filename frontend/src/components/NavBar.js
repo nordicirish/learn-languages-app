@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/esm/Container";
 
-// import { Link } from "react-router-dom";
+//NavBar component uses Bootstrap classes for layout styling and repsonsive behaviour
 
 const NavBar = () => {
   return (
@@ -16,6 +16,7 @@ const NavBar = () => {
           <Navbar.Brand href="/">
             <h1>Learn Languages App</h1>
           </Navbar.Brand>
+          {/*menu is a toggle button on smaller screens */}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto fs-3">
