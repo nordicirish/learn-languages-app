@@ -9,6 +9,7 @@ const EditTranslation = () => {
   //useNavigate hook allows to navigate away from the current url
   let navigate = useNavigate();
   // useParam hook captures url paramater
+  // used to navigate back to the translations page on cancel or update
   const { id } = useParams();
 
   const [translation, setTranslation] = useState({
@@ -18,11 +19,13 @@ const EditTranslation = () => {
   });
 
   const [tags, setTags] = useState([]);
-  // destructure the translation object and assign it's values the named variables
+  // destructure the translation object and assign it's values to the named variables
   const { english, finnish, tag_id } = translation;
   const onInputChange = (e) => {
     setTranslation({ ...translation, [e.target.id]: e.target.value });
   };
+
+  // uses the api to fetch the selected item from the database
   const getTranslation = () => {
     axios
       .get(`/api/find/${id}`)
@@ -39,11 +42,12 @@ const EditTranslation = () => {
         console.log(e);
       });
   };
-
+  // useEffect ensures the fetch happens once on the initial page load
   useEffect(() => {
     getTranslation();
   }, []);
 
+  // uses the api to returns a list of tags from the database tag table to populate the form tag dropdwon
   const getTags = () => {
     axios
       .get("/api/Tags")
@@ -61,13 +65,14 @@ const EditTranslation = () => {
 
   const updateTranslation = async (e) => {
     e.preventDefault();
+    // tells the api to update the item with the amended values
     await axios.put(`/api/update/${id}`, translation);
     // navigates the browser back to the translations admin screen
     navigate("/translations");
   };
 
   const cancelUpdate = async (e) => {
-    // prevents buton acting as a submit button
+    // prevents button acting as a submit button
     e.preventDefault();
     navigate("/translations");
   };
@@ -89,7 +94,9 @@ const EditTranslation = () => {
                 onChange={(e) => onInputChange(e)}
                 placeholder="Enter the English word"
                 required
+                // validates english letters
                 pattern="[a-zA-Z]*"
+                // used to store the validation error message
                 title="The word should have only English letters"
               />
             </Form.Group>
@@ -103,6 +110,7 @@ const EditTranslation = () => {
                 value={finnish}
                 onChange={(e) => onInputChange(e)}
                 placeholder="Enter the Finnish translation"
+                // validates nordic letters
                 pattern="[a-zA-ZäöåÄÖÅ]*"
                 title="The word should have only letters"
                 required
@@ -118,6 +126,7 @@ const EditTranslation = () => {
                 value={tag_id}
                 required
               >
+                {/* map the tag names to the list items on the form */}
                 <option value="">Select a tag</option>
                 {tags.map((tag) => (
                   <option key={tag.tag} value={tag.tag}>
@@ -126,19 +135,6 @@ const EditTranslation = () => {
                 ))}
               </Form.Select>
             </Form.Group>
-
-            {/* <Form.Group className="mb-3">
-              <Form.Control
-                type="text"
-                name="tag"
-                value={tag_id}
-                onChange={(e) => onInputChange(e)}
-                placeholder="Enter the tag"
-                required
-                pattern="[a-zA-Z]*"
-                title="The word should have only English letters"
-              />
-            </Form.Group> */}
 
             <Button type="submit" id="1" onClick={updateTranslation}>
               Update
