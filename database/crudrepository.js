@@ -6,7 +6,7 @@ const dbconfig = require("./dbconfig");
 const connection = mysql.createConnection(dbconfig);
 let pool = mysql.createPool(dbconfig);
 
-// Research if necessary
+// Open and close connection as necessary
 let connectionFunctions = {
   connect: () => {
     return new Promise((resolve, reject) => {
@@ -50,6 +50,8 @@ let connectionFunctions = {
 
   findAll: () => {
     return new Promise((resolve, reject) => {
+      // connections pooled for efficiency
+      // pool size specified in dbconfig.js
       pool.query(`SELECT * from translations`, (err, translations) => {
         if (err) {
           reject(err);
@@ -58,7 +60,7 @@ let connectionFunctions = {
       });
     });
   },
-
+  // quert to return all tag values
   findTags: () => {
     return new Promise((resolve, reject) => {
       pool.query(`SELECT * from tags`, (err, tags) => {
@@ -69,6 +71,8 @@ let connectionFunctions = {
       });
     });
   },
+
+  //return all tags in the translations table sorted by tag-id ascending
 
   sortByTag: () => {
     return new Promise((resolve, reject) => {
@@ -83,7 +87,7 @@ let connectionFunctions = {
       );
     });
   },
-
+  // return all tags ins the translations table sorted bt tag-id descscending
   sortByTagDesc: () => {
     return new Promise((resolve, reject) => {
       pool.query(
@@ -97,7 +101,7 @@ let connectionFunctions = {
       );
     });
   },
-
+  // return item selected by id
   findById: (id) => {
     let sql = `SELECT * FROM translations WHERE id = ? `;
     return new Promise((resolve, reject) => {
@@ -110,7 +114,7 @@ let connectionFunctions = {
       });
     });
   },
-
+  // delete item selected by id
   deleteById: (id) => {
     let sql = `DELETE from translations WHERE id = ? `;
     return new Promise((resolve, reject) => {
@@ -119,7 +123,7 @@ let connectionFunctions = {
       });
     });
   },
-
+  // update an item selected byId
   putById: (translation, id) => {
     console.log(translation);
     console.log(id);
