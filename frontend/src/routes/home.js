@@ -94,7 +94,7 @@ const Home = () => {
 
   // updates the state of 1 row referenced by id value
   // if a submitted answer is correct
-  const toggleCorrect = (e) => {
+  const toggleCorrect = () => {
     try {
       //  console.log("id is" + id);
       // id is incremented by 1 in the GameForm Component
@@ -118,7 +118,7 @@ const Home = () => {
   };
   // updates the state of 1 row referenced by id value
   // if a submitted answer is incorrect
-  const toggleIncorrect = (e) => {
+  const toggleIncorrect = () => {
     try {
       // id is incremented by 1 in the GameForm Component
       // so need to subtract 1 to synchronise with array index values
