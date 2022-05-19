@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Alert from "react-bootstrap/Alert";
-
 // GameForm component renders the game
 import GameForm from "../components/GameForm";
 
 const Home = () => {
   const [counter, setCounter] = useState(0);
-
   // used to record if the user input is correct
   // for toggling the display properties of GameForm elements
   const [isCorrect, setIscorrect] = useState(false);
@@ -43,6 +40,7 @@ const Home = () => {
         console.log(error);
       });
   };
+
   // useEffect runs getTranslations once on page load
   useEffect(() => {
     getTranslations();
@@ -78,53 +76,66 @@ const Home = () => {
   };
 
   const onInputChange = async (e) => {
-    // stops a page reload
     e.preventDefault();
+    try {
+      // sets id state to the current array row index
+      setId(e.target.id);
 
-    // sets id state to the current array row index
-    setId(e.target.id);
-
-    // possible future implementation
-    // setButtonId(id);
-    // sets the word pair to the current form row values
-    setUserAnswer(e.target.value);
-    setRightAnswer(e.target.name);
-  };
-  // updates the state of 1 row referenced by id
-  const toggleCorrect = (e) => {
-    console.log("id is" + id);
-    // id is incremented by 1 in the GameForm Component
-    // so need to subtract 1 to synchronise with array index values
-    let adjustedIndex = Number(id) - 1;
-    // make shallow copies of array and selected element to avoid state mutation
-    let copyArray = [...translations];
-    let copyTranslation = { ...copyArray[adjustedIndex] };
-    console.log("temp element " + copyTranslation);
-    // set showAlert false as answer will be correct
-    copyTranslation.showAlert = false;
-    // switch the boolean value of isCorrect
-    copyTranslation.isCorrect = !isCorrect;
-    // update the element in the copied array
-    copyArray[adjustedIndex] = copyTranslation;
-    // Use the copy to array set the new isCorrect state
-    setTranslations(copyArray);
+      // possible future implementation
+      // setButtonId(id);
+      // sets the word pair to the current form row values
+      setUserAnswer(e.target.value);
+      setRightAnswer(e.target.name);
+    } catch (error) {
+      console.log(error);
+    }
+    // stops a page reload
   };
 
-  const toggleIncorrect = (e) => {
-    console.log("id is" + id);
-    // id is incremented by 1 in the GameForm Component
-    // so need to subtract 1 to synchronise with array index values
-    let adjustedIndex = Number(id) - 1;
-    // make shallow copies of array and selected element to avoid state mutation
-    let copyArray = [...translations];
-    let copyTranslation = { ...copyArray[adjustedIndex] };
-    console.log("temp element " + copyTranslation);
-    // switch the boolean value of the showAlert
-    copyTranslation.showAlert = !showAlert;
-    // update the element in the copied array
-    copyArray[adjustedIndex] = copyTranslation;
-    // Use the copy to array set the new isCorrect state
-    setTranslations(copyArray);
+  // updates the state of 1 row referenced by id value
+  // if a submitted answer is correct
+  const toggleCorrect = () => {
+    try {
+      //  console.log("id is" + id);
+      // id is incremented by 1 in the GameForm Component
+      // so need to subtract 1 to synchronise with array index values
+      let adjustedIndex = Number(id) - 1;
+      // make shallow copies of array and selected element to avoid state mutation
+      let copyArray = [...translations];
+      let copyTranslation = { ...copyArray[adjustedIndex] };
+      console.log("temp element " + copyTranslation);
+      // set showAlert false as answer will be correct
+      copyTranslation.showAlert = false;
+      // switch the boolean value of isCorrect
+      copyTranslation.isCorrect = !isCorrect;
+      // update the element in the copied array
+      copyArray[adjustedIndex] = copyTranslation;
+      // Use the copy to array set the new isCorrect state
+      setTranslations(copyArray);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // updates the state of 1 row referenced by id value
+  // if a submitted answer is incorrect
+  const toggleIncorrect = () => {
+    try {
+      // id is incremented by 1 in the GameForm Component
+      // so need to subtract 1 to synchronise with array index values
+      let adjustedIndex = Number(id) - 1;
+      // make shallow copies of array and selected element to avoid state mutation
+      let copyArray = [...translations];
+      let copyTranslation = { ...copyArray[adjustedIndex] };
+      console.log("temp element " + copyTranslation);
+      // switch the boolean value of the showAlert
+      copyTranslation.showAlert = !showAlert;
+      // update the element in the copied array
+      copyArray[adjustedIndex] = copyTranslation;
+      // Use the copy to array set the new isCorrect state
+      setTranslations(copyArray);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handleFormat = () => {
     // copies the strings to avoid mutation then formats them and
@@ -147,7 +158,11 @@ const Home = () => {
 
   // false argument reloads page from local memory
   const handleReset = async (e) => {
-    window.location.reload(false);
+    try {
+      window.location.reload(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
