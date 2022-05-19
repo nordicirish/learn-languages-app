@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
+import Alert from "react-bootstrap/Alert";
 // Button group may be needed to map an id onto each button for future development
 import { ButtonGroup } from "react-bootstrap";
 import Badge from "react-bootstrap/Badge";
@@ -18,6 +19,7 @@ const GameForm = ({
   handleSubmit,
   counter,
   handleReset,
+  showAlert,
 }) => {
   return (
     //   bootsrap  repsonsive layout classes
@@ -115,6 +117,12 @@ const GameForm = ({
                       required
                     />
                   </InputGroup>
+                  {/* shows an alert if the answer wrong */}
+                  {translation.showAlert && (
+                    <Alert variant="warning">
+                      <Alert.Heading>Sorry that's not correct!</Alert.Heading>
+                    </Alert>
+                  )}
                 </Col>
                 <Col xs={2} className="justify-content-center">
                   {translation.isCorrect ? (
