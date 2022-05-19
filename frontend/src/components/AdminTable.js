@@ -49,7 +49,7 @@ const AdminTable = ({
                 <th>Finnish</th>
                 {/* inline styles to set column widths - column widths set by th width */}
                 <th style={{ width: "25%" }}>Tag</th>
-                <th style={{ width: "14%", minWidth: "14%", maxWidth: "14%" }}>
+                <th style={{ width: "15%", minWidth: "15%", maxWidth: "15%" }}>
                   Edit
                 </th>
               </tr>
