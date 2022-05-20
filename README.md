@@ -4,11 +4,31 @@ A foreign language vocabulary training app for kids.
 
 ## Author
 
-Roger Graham
+Roger Graham roger.graham@tuni.fi
 
 ## Demo Website
 
 https://nordicirish-learn-languages.herokuapp.com/
+
+## Screenshots
+
+### Game screen
+
+![Screenshot](docs/images/screenshot1.png)
+
+### Admin screen
+
+![Screenshot](docs/images/screenshot2.png)
+
+### Edit screen
+
+![Screenshot](docs/images/screenshot3.png)
+
+## How to use
+
+Use the admin screen to add, edit and delete English words and their corresponding Finnish translations.
+
+The translations are displayed on the homepage form. The user then attempts to input the correct translation and the game gives them feedback on their progress.
 
 ## Requirements
 
@@ -80,9 +100,46 @@ db =
 cd frontend
 
 npm install
+
 npm run build
+
 npm run start
 
-<!-- cd .. nodemon index.js -->
+## Credits
 
-<!-- access http://localhost:8080 -->
+### My lecturers at Tampere University of Applied Sciences for their great knowledge, teaching and motivation
+
+Jussi Pohjolainen
+
+Jari Aalto
+
+Sami Kojo-Fry
+
+Teemu Heinimäki
+
+Pekka Yliruusi
+
+### Other Credits
+
+Various React tutorials from Chris Blakely:
+https://www.freecodecamp.org/news/author/chris
+
+Dev Ed's YouTube channel
+https://www.youtube.com/c/DevEd
+
+A cast of thousands on stackoverflow :) https://stackoverflow.com/
+
+## Planned Future Development
+
+## Game screen
+
+- Filtering by tag
+- Randomization of the game items
+- Limit to the number items rendered in the game
+- Users can select the range of numbers the game uses
+- Add Feedback sounds
+
+## Admin screen
+
+- Edit screen to become a modal or possibly introduce inline editing and deletion
+- Add tag creation, updating and deletion
