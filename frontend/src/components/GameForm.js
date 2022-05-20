@@ -19,19 +19,18 @@ const GameForm = ({
   handleSubmit,
   counter,
   handleReset,
-  showAlert,
 }) => {
   return (
     //   bootsrap  repsonsive layout classes
-    <div className="row mt-4 text-center">
-      <div className="col-sm-10 col-offset-3 mx-auto shadow p-5">
+    <div className="row mt-4  text-center">
+      <div className="col-sm-10 center-display col-offset-3  mx-auto shadow p-5">
         <Row className="justify-content-start">
           <Col className="fs-2 mb-2 text " xs={10}>
             {/* conditional rendering badge changes colour depending on score */}
             {(() => {
               if (counter > 0 && counter <= 2) {
                 return (
-                  <Badge pill bg="danger" className="fs-2">
+                  <Badge pill bg="danger" className="fs-2 --bs-indigo">
                     {counter} out of {translations.length}
                   </Badge>
                 );
@@ -49,7 +48,7 @@ const GameForm = ({
                 );
               } else {
                 return (
-                  <Badge pill bg="danger" className="fs-2">
+                  <Badge pill bg="danger" className="fs-2 ">
                     Let's go!
                   </Badge>
                 );
@@ -59,10 +58,10 @@ const GameForm = ({
         </Row>
         {/* Column headings */}
         <Row className="justify-content-center mt-2">
-          <Col className="fs-2 text" xs={3} sm={3} m={3} lg={3} xl={3}>
+          <Col className="fs-2 text" xs={3}>
             <h2>English</h2>
           </Col>
-          <Col className="fs-2 text" xs={7} sm={7} m={7} lg={7} xl={7}>
+          <Col className="fs-2 text" xs={7}>
             <h2>Finnish</h2>
           </Col>
         </Row>
@@ -75,9 +74,9 @@ const GameForm = ({
               <Row
                 key={index}
                 // id={translation.id}
-                className="justify-content-center mt-3 align-items-center"
+                className="justify-content-center mt-2 align-items-center"
               >
-                <Col xs={10} sm={10} m={10} lg={10} className="my-1">
+                <Col xs={10} className="my-1">
                   <InputGroup size="lg" key={index}>
                     <InputGroup.Text
                       className="bg-info bg-gradient fs-3 text justify-content-center"
@@ -87,7 +86,6 @@ const GameForm = ({
                     </InputGroup.Text>
                     <Form.Control
                       spellCheck="false"
-                      // disabled={isDisabled}
                       //   change input appearance if user answer is correct
                       className={
                         translation.isCorrect
@@ -133,7 +131,7 @@ const GameForm = ({
                       <FontAwesomeIcon
                         // tell screen readers to ignore the icon
                         aria-hidden="true"
-                        icon="fa-solid fa-face-smile"
+                        icon="fa-solid fas fa-grin"
                         size="2x"
                         title="Correct!"
                       />
