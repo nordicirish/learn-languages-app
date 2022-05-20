@@ -10,6 +10,10 @@ Roger Graham roger.graham@tuni.fi
 
 https://nordicirish-learn-languages.herokuapp.com/
 
+## Youtube video
+
+https://www.youtube.com/watch?v=uH4uRBqRCjE
+
 ## Screenshots
 
 ### Game screen
@@ -143,3 +147,4 @@ A cast of thousands on stackoverflow :) https://stackoverflow.com/
 
 - Edit screen to become a modal or possibly introduce inline editing and deletion
 - Add tag creation, updating and deletion
+- Support for additional languages
