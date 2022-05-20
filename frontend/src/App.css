@@ -20,13 +20,14 @@ label {
   display: flex;
   align-items: center;
   justify-content: center;
+  
 }
 .navbar {
   padding-left: 1rem;
   margin-bottom: 1rem;
 }
 .page-box {
-  background-color:aliceblue;
+  background-color: #dde5f0;
   margin-top:2rem;
   padding:1rem;
   border-radius: 0.6rem;
@@ -35,7 +36,10 @@ label {
   max-width: 95%
 }
 
-
+.center-display{
+  background-color: #ff8c00;
+  border-radius: 0.9rem;
+}
 
 .App-link {
   color: #61dafb;
@@ -54,12 +58,12 @@ label {
 
 .table-striped>tbody>tr:nth-of-type(odd)>* {
     
-   --bs-table-accent-bg: rgb(13 110 253 / 11%)  !important;
+   --bs-table-accent-bg: #9ec5fe !important;
   color: var(--bs-table-striped-color);
 }
 .table-striped>tbody>tr:nth-of-type(even)>* {
   
-  --bs-table-accent-bg: rgb(13 110 253 / 5%) !important;
+  --bs-table-accent-bg: #cfe2ff  !important;
   color: var(--bs-table-striped-color);
 }
 
@@ -79,8 +83,8 @@ label {
 /* home page counter style - extends bootstrap style */
 .rounded-pill {
   
-  width: 16rem!important;
-  min-width:16rem!important;
+  width: 100%!important;
+  min-width:100%!important;
   height: 100%!important;
 }
 
