@@ -10,8 +10,7 @@ import SubmitForm from "../components/SubmitForm";
 
 const Translations = () => {
   const [translations, setTranslations] = useState([]);
-  // used to display the delete modal form
-  // const [show, setShow] = useState(false);
+
   // newTranslation object used by SubmitForm component to post a new item
   // initialise newTranslation state
   const [newTranslation, setNewTranslation] = useState({
@@ -88,6 +87,7 @@ const Translations = () => {
       }
       // clear form fields
       await e.target.reset();
+
       // api posts the newTranslation object to the database
       await axios.post("/api/add", newTranslation, {
         headers: {
@@ -95,7 +95,7 @@ const Translations = () => {
         },
       });
       // fetches the updated data from the database
-      // may change to updating the array instead in futire releases
+      // may change to updating the array instead in future releases
       await getTranslations();
       setNewTranslation({ english: "", finnish: "", tag_id: "" });
     } catch (error) {
