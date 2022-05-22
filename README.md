@@ -36,9 +36,11 @@ The translations are displayed on the homepage form. The user then attempts to i
 
 ## Requirements
 
-Node.js
-MySQL / MariaDB
-React
+`Node.js`
+
+`MySQL / MariaDB`
+
+`React`
 
 ## Install
 
@@ -46,68 +48,63 @@ React
 
 Create database tables and add some translation information and word categories.
 
-CREATE TABLE translations(
-id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-english VARCHAR(255) UNIQUE NOT NULL,
-finnish VARCHAR(255) UNIQUE NOT NULL,
-tag_id VARCHAR(255),
-FOREIGN KEY(tag_id) REFERENCES tags(tag) ON UPDATE CASCADE ON DELETE RESTRICT
-);
+`CREATE TABLE translations(id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,`
+`english VARCHAR(255) UNIQUE NOT NULL,`
+`finnish VARCHAR(255) UNIQUE NOT NULL,`
+`tag_id VARCHAR(255),`
+`FOREIGN KEY(tag_id) REFERENCES tags(tag) ON UPDATE CASCADE ON DELETE RESTRICT`
+`);`
 
-CREATE TABLE tags(
-tag VARCHAR(255) UNIQUE NOT NULL PRIMARY KEY
-);
+`CREATE TABLE tags(tag VARCHAR(255) UNIQUE NOT NULL PRIMARY KEY);`
 
-INSERT INTO
-tags (tag)
-VALUES
-("Colors"),
-("Vehicles"),
-("Animals"),
-("Furniture"),
-("Plants");
+`INSERT INTO tags (tag)`
+`VALUES`
+`("Colors"),`
+`("Vehicles"),`
+`("Animals"),`
+`("Furniture"),`
+`("Plants");`
 
-INSERT INTO
-translations (english, finnish, tag_id)
-VALUES
-("red", "punainen", "Colors"),
-("car", "auto", "Vehicles"),
-("dog", "koira", "Animals"),
-("cat", "kissa", "Animals"),
-("table", "pöytä", "Furniture"),
-("birch", "koivu", "Plants")
-;
+`INSERT INTO translations (english, finnish, tag_id)`
+`VALUES`
+`("red", "punainen", "Colors"),`
+`("car", "auto", "Vehicles"),`
+`("dog", "koira", "Animals"),`
+`("cat", "kissa", "Animals"),`
+`("table", "pöytä", "Furniture"),`
+`("birch", "koivu", "Plants");`
 
 ### Application
 
 clone the code to your computer
 
-git clone https://github.com/nordicirish/learn-languages-app
+`git clone https://github.com/nordicirish/learn-languages-app`
 
-#### 1 Install the backend
+### 1 Install the backend
 
 In the root of the project:
-npm install
+
+`npm install`
 
 Rename env file to .env and fill your database credentials:
 
-db_server =
+`db_server =`
 
-user =
+`user =`
 
-password =
+`password =`
 
-db =
+`db =`
 
-#### 2 Install React frontend
+### 2 Install React frontend
 
-cd frontend
+`cd frontend`
 
-npm install
+`npm install`
 
-npm run build
+`npm run build`
 
-npm run start
+`npm run start`
 
 ## Credits
 
@@ -135,7 +132,7 @@ A cast of thousands on stackoverflow :) https://stackoverflow.com/
 
 ## Planned Future Development
 
-## Game screen
+## Game Screen
 
 - Filtering by tag
 - Randomization of the game items
@@ -143,7 +140,7 @@ A cast of thousands on stackoverflow :) https://stackoverflow.com/
 - Users can select the range of numbers the game uses
 - Add Feedback sounds
 
-## Admin screen
+## Admin Screen
 
 - Edit screen to become a modal or possibly introduce inline editing and deletion
 - Add tag creation, updating and deletion
