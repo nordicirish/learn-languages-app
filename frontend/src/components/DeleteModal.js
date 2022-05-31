@@ -18,7 +18,7 @@ export default function DeleteModal({ translation, deleteTranslation }) {
         ></i>
       </a>
       {/* use show state to show or hide the modal */}
-      <Modal show={show} onHide={handleClose} centered>
+      <Modal show={show} onHide={handleClose} centered size="sm">
         <Modal.Header closeButton>
           <Modal.Title>Deletion</Modal.Title>
         </Modal.Header>
@@ -33,7 +33,7 @@ export default function DeleteModal({ translation, deleteTranslation }) {
             Cancel delete
           </Button>
           <Button
-            variant="primary"
+            variant="danger"
             onClick={async (e) => {
               // calls the delete function passed as a prop from Translations.js
               //  via AdminTable.js to the modal
