@@ -38,8 +38,8 @@ const EditTranslation = () => {
           tag_id: response.data.tag_id,
         });
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error) => {
+        console.log(error);
       });
   };
   // useEffect ensures the fetch happens once on the initial page load
@@ -55,8 +55,8 @@ const EditTranslation = () => {
         console.log("promise fulfilled");
         setTags(response.data);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error) => {
+        console.log(error);
       });
   };
   useEffect(() => {
