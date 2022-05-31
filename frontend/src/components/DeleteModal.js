@@ -22,7 +22,12 @@ export default function DeleteModal({ translation, deleteTranslation }) {
         <Modal.Header closeButton>
           <Modal.Title>Deletion</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure that you want to delete this item?</Modal.Body>
+        <Modal.Body>
+          Are you sure that you want to delete this item? <br />
+          English: <span className="highlight">{translation.english}</span>{" "}
+          <br /> Finnish:{" "}
+          <span className="highlight">{translation.finnish}</span>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancel delete
