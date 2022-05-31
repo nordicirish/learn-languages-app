@@ -115,4 +115,8 @@ label {
   padding: .5rem 1rem !important;
   max-width: 50%   
 }
-
+/* highlight modal text */
+.highlight{
+  font-size: 1.5rem;
+  color: orangered
+}
