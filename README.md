@@ -4,7 +4,7 @@ A foreign language vocabulary training app for kids.
 
 ## Author
 
-Roger Graham roger.graham@tuni.fi
+Roger Graham 
 
 ## Demo Website
 
